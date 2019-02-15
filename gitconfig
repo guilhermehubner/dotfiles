@@ -1,0 +1,9 @@
+[user]
+	name = Guilherme Hübner
+	email = guilhermehubner@gmail.com
+[github]
+	user = guilhermehubner
+[core]
+    editor = 'nvim'
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
