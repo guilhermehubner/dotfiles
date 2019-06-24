@@ -236,6 +236,9 @@ au Filetype typescript nmap <Leader>rn <Plug>(TsCompleteJobRename)
  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
  au FileType go nmap <Leader>gr <Plug>(go-referrers)
  au FileType go nmap <C-k> <Plug>(go-info)
+
+ " work around to coverage works with github.com/agiledragon/gomonkey/
+ cab GoCoverage GoCoverage -gcflags=all=-l
 " }
 
 " jedi-vim {
