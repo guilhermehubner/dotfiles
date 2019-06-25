@@ -37,5 +37,5 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 [ -f ~/.bash_functions ] && . ~/.bash_functions
 [ -f ~/.bash_local ] && . ~/.bash_local
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
+[ -f ~/.nvm.bash ] && . ~/.nvm.bash

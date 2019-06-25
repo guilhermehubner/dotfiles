@@ -1,39 +1,41 @@
 PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-DOCKER_PPA=deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
-
 YARN_PPA=deb https://dl.yarnpkg.com/debian/ stable main
 
-DOCKER_COMPOSE_VERSION=1.23.2
+DOCKER_COMPOSE_VERSION=1.24.1
 DOCKER_COMPOSE_URL=https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(shell uname -s)-$(shell uname -m)
 
-GO_VERSION=1.12
+GO_VERSION=1.13
 ARCHITETURE=$(shell dpkg --print-architecture)
 GO_FILE_NAME=go${GO_VERSION}.linux-${ARCHITETURE}.tar.gz
 GO_URL=https://dl.google.com/go/${GO_FILE_NAME}
+export PATH:=$(PATH):/usr/local/go/bin:~/go/bin
+
+NVM_VERSION=v0.34.0
+export NVM_DIR="${HOME}/.nvm"
 
 config-bash:
 	ln -sf `pwd`/bash_aliases ~/.bash_aliases
 	ln -sf `pwd`/bash_functions ~/.bash_functions
 	ln -sf `pwd`/bashrc ~/.bashrc
 	ln -sf `pwd`/profile ~/.profile
+	ln -sf `pwd`/nvm.bash ~/.nvm.bash
+	mkdir -p ~/.config/terminator
+	ln -sf `pwd`/terminator-config ~/.config/terminator/config
 
 init:
 	sudo apt update
-	sudo apt install npm vim htop deepin-terminal meld git \
+	sudo apt install vim htop terminator meld git \
 		software-properties-common curl python3-pip \
-		apt-transport-https ca-certificates wget -y
+		apt-transport-https ca-certificates wget silversearcher-ag -y
 	# disable swap
 	sudo swapoff -a
-	mkdir -p ~/.config/deepin/deepin-terminal/
-	cp -f `pwd`/deepin-terminal_config.conf \
-		~/.config/deepin/deepin-terminal/config.conf
 	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
 	ln -sf `pwd`/gitconfig ~/.gitconfig
 	ln -sf `pwd`/tern-config ~/.tern-config
 	# set deepin terminal as default
 	gsettings set org.gnome.desktop.default-applications.terminal \
-		exec deepin-terminal
+		exec terminator
 
 install-go:
 	wget ${GO_URL}
@@ -41,7 +43,11 @@ install-go:
 	tar xzf ${GO_FILE_NAME} -C tmp/
 	sudo cp -r tmp/* /usr/local/
 	rm -rf ${GO_FILE_NAME} tmp
-	export PATH=$PATH:/usr/local/go/bin
+
+install-nvm:
+	git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR}
+	cd ${NVM_DIR} && git checkout ${NVM_VERSION} && chmod +x nvm.sh && ./nvm.sh
+	. ~/.nvm.bash && nvm install --lts
 
 install-yarn:
 	sudo curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | \
@@ -55,7 +61,7 @@ install-neovim:
 	#install neovim
 	sudo apt-add-repository ppa:neovim-ppa/stable -y
 	sudo apt update
-	sudo apt install neovim silversearcher-ag -y
+	sudo apt install neovim -y
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
 	#install plugins
@@ -66,16 +72,11 @@ install-neovim:
 	nvim --noplugin +PlugInstall +qall
 	cd ~/.config/nvim/plugged/tern_for_vim/ && \
 		yarn install
-	cd ~/.config/nvim/plugged/YouCompleteMe && \
+	. ~/.nvm.bash && cd ~/.config/nvim/plugged/YouCompleteMe && \
 		python3 install.py --gocode-completer --tern-completer
 
 install-docker:
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-		sudo apt-key add -
-	sudo add-apt-repository "${DOCKER_PPA}"
-	sudo apt update --fix-missing
-	sudo apt-cache policy docker-ce
-	sudo apt install docker-ce -y
+	sudo curl -fsSL https://get.docker.com | bash
 	sudo usermod -aG docker ${USER}
 
 install-docker-compose:
@@ -85,7 +86,8 @@ install-docker-compose:
 install-kubectl:
 	curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | \
 		sudo apt-key add -
-	echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | \
+	VERSION=`lsb_release -a 2>/dev/null | grep Codename | awk '{print $2}'` && \
+		echo "deb http://apt.kubernetes.io/ kubernetes-${VERSION} main" | \
 		sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 	sudo apt update
 	sudo apt install -y kubectl
@@ -94,6 +96,7 @@ install: \
 	config-bash \
 	init \
 	install-go \
+	install-nvm \
 	install-yarn \
 	install-neovim \
 	install-docker \
