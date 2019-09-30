@@ -81,8 +81,16 @@ set mouse=a
 
 let g:netrw_banner=0
 
-    " close quickfix
-    nnoremap <leader><space> :cclose<CR> :lclose<CR>
+" close quickfix
+nnoremap <leader><space> :cclose<CR> :lclose<CR>
+
+" mark column limit for languages
+autocmd BufRead,BufNewFile *.go let &colorcolumn=join(range(101,2000),",")
+autocmd BufRead,BufNewFile *.py let &colorcolumn=join(range(81,2000),",")
+
+" set history and undo size
+set history=1000
+set undolevels=1000
 " }
 
 " nobackup {
