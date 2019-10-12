@@ -14,11 +14,25 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PS1="\[$(tput bold)\]\[\033[32m\][\W]\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \\$\[$(tput sgr0)\] "
+# Colors
+black="\[$(tput setaf 0)\]"
+red="\[$(tput setaf 1)\]"
+green="\[$(tput setaf 2)\]"
+yellow="\[$(tput setaf 3)\]"
+blue="\[$(tput setaf 4)\]"
+magenta="\[$(tput setaf 5)\]"
+cyan="\[$(tput setaf 6)\]"
+white="\[$(tput setaf 7)\]"
+bold="$(tput bold)"
+# Clear attributes
+clear_attributes="\[$(tput sgr0)\]"
+
+# Custom bash prompt - "➜  ~ (master) "
+export PS1="${titlebar}${bold}${green}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export PATH=$PATH:/usr/local/go/bin:~/go/bin
-export GTK_THEME=Adwaita:dark
 
 # Record each line as it gets issued
 PROMPT_COMMAND='history -a'

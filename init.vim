@@ -37,7 +37,7 @@ Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'flazz/vim-colorschemes'
+Plug 'guilhermehubner/vim', { 'as': 'dracula' }
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -48,8 +48,7 @@ Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " UI Configuration {
-colorscheme molokai
-"colorscheme jellybeans
+colorscheme dracula_bold
 hi Comment ctermfg=39
 
 set nospell
