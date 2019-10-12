@@ -14,6 +14,9 @@ export PATH:=$(PATH):/usr/local/go/bin:~/go/bin
 NVM_VERSION=v0.34.0
 export NVM_DIR="${HOME}/.nvm"
 
+KUBECTL_VERSION=$(shell curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+
 config-bash:
 	ln -sf `pwd`/bash_aliases ~/.bash_aliases
 	ln -sf `pwd`/bash_functions ~/.bash_functions
@@ -84,13 +87,9 @@ install-docker-compose:
 	sudo chmod +x /usr/local/bin/docker-compose
 
 install-kubectl:
-	curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | \
-		sudo apt-key add -
-	VERSION=`lsb_release -a 2>/dev/null | grep Codename | awk '{print $2}'` && \
-		echo "deb http://apt.kubernetes.io/ kubernetes-${VERSION} main" | \
-		sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-	sudo apt update
-	sudo apt install -y kubectl
+	curl -LO ${KUBECTL_URL}
+	chmod +x ./kubectl
+	sudo mv ./kubectl /usr/local/bin/kubectl
 
 install: \
 	config-bash \
