@@ -78,6 +78,10 @@ set inccommand=nosplit
 
 set mouse=a
 
+" avoid long line issues
+map k gk
+map j gj
+
 let g:netrw_banner=0
 
 " close quickfix
