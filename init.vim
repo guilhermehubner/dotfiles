@@ -82,6 +82,10 @@ set mouse=a
 map k gk
 map j gj
 
+" Vmap for maintain Visual Mode after shifting > and <
+vmap < <gv
+vmap > >gv
+
 let g:netrw_banner=0
 
 " close quickfix
