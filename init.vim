@@ -37,7 +37,7 @@ Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'guilhermehubner/vim', { 'as': 'dracula' }
+Plug 'guilhermehubner/dracula-vim', { 'as': 'dracula' }
 
 " Git
 Plug 'airblade/vim-gitgutter'
