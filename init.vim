@@ -162,7 +162,7 @@ xnoremap <expr> P 'Pgv"'.v:register.'y'
 " }
 
 " vim-airline
-let g:airline_theme = 'powerlineish'
+let g:airline_theme = 'term'
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
