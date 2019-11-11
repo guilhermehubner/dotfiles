@@ -35,7 +35,6 @@ init:
 	sudo swapoff -a
 	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
 	ln -sf `pwd`/gitconfig ~/.gitconfig
-	ln -sf `pwd`/tern-config ~/.tern-config
 	# set deepin terminal as default
 	gsettings set org.gnome.desktop.default-applications.terminal \
 		exec terminator
@@ -64,19 +63,18 @@ install-neovim:
 	#install neovim
 	sudo apt-add-repository ppa:neovim-ppa/stable -y
 	sudo apt update
-	sudo apt install neovim -y
+	sudo apt install neovim fonts-powerline -y
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
 	#install plugins
-	yarn global add tern typescript-eslint-parser typescript
+	yarn global add typescript-eslint-parser typescript
+	. ~/.nvm.bash && npm install -g javascript-typescript-langserver
 	mkdir -p ~/.config/nvim
 	ln -sf `pwd`/init.vim ~/.config/nvim/init.vim
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	nvim --noplugin +PlugInstall +qall
-	cd ~/.config/nvim/plugged/tern_for_vim/ && \
-		yarn install
 	. ~/.nvm.bash && cd ~/.config/nvim/plugged/YouCompleteMe && \
-		python3 install.py --gocode-completer --tern-completer
+		python3 install.py
 
 install-docker:
 	sudo curl -fsSL https://get.docker.com | bash
