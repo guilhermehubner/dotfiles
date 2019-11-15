@@ -23,12 +23,12 @@ blue="\[$(tput setaf 4)\]"
 magenta="\[$(tput setaf 5)\]"
 cyan="\[$(tput setaf 6)\]"
 white="\[$(tput setaf 7)\]"
-bold="$(tput bold)"
+bold="\[$(tput bold)\]"
 # Clear attributes
 clear_attributes="\[$(tput sgr0)\]"
 
 # Custom bash prompt - "➜  ~ (master) "
-export PS1="${titlebar}${bold}${green}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
+export PS1="${bold}${green}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
