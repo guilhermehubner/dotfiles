@@ -81,6 +81,11 @@ set splitright
 set splitbelow
 set inccommand=nosplit
 
+" Expand splits
+nmap <Leader>eh <C-w>_
+nmap <Leader>ev <C-w>\|
+nmap <Leader>ef <C-w>_<C-w>\|
+
 " Connect clipboard from OS to VIM clipboard
 set clipboard=unnamedplus
 
