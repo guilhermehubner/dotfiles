@@ -12,9 +12,6 @@ Plug 'junegunn/fzf.vim'
 " General linting and fixers
 Plug 'w0rp/ale'
 
-" Python
-Plug 'davidhalter/jedi-vim'
-
 " GO
 Plug 'fatih/vim-go'
 
@@ -32,12 +29,6 @@ Plug 'tpope/vim-fugitive'
 
 " Highlights Syntax
 Plug 'sheerun/vim-polyglot'
-
-" LSP (Language Server Protocol)
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 
 call plug#end()
 
@@ -193,26 +184,19 @@ cab Q  q
 "" Plugins configurations
 "*****************************************************************************
 
-" YouCompleteMe
+" ====== YouCompleteMe ======
 let g:ycm_key_list_select_completion = ['<C-n>']
 let g:ycm_key_list_previous_completion = ['<C-p>']
 set completeopt-=preview
 
-let g:ycm_language_server =
-    \[
-        \ {
-        \   'name': 'javascript-typescript',
-        \   'cmdline': ['javascript-typescript-stdio'],
-        \   'filetypes': ['javascript', 'typescript', 'typescriptreact']
-        \ },
-        \ {
-        \   'name': 'go',
-        \   'cmdline': ['gopls'],
-        \   'filetypes': ['go']
-        \ },
-    \]
+autocmd BufEnter *.tsx set filetype=typescript
 
-" ale
+au FileType javascript,typescript,python nnoremap <C-k> :YcmCompleter GetType<CR>
+au FileType javascript,typescript,python nnoremap <C-]> :YcmCompleter GoTo<CR>
+au FileType javascript,typescript,python nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+au FileType javascript,typescript nmap <Leader>rn :YcmCompleter RefactorRename
+
+" ====== ale ======
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_fix_on_save = 1
@@ -224,7 +208,6 @@ let g:ale_fix_on_save = 1
     let g:ale_linters = {
     \  'go': ['gopls', 'golangci-lint'],
     \  'python': ['flake8', 'pylint'],
-    \  'typescriptreact': ['tsserver'],
     \  'typescript': ['tsserver'],
     \  'javascript': ['eslint'],
     \}
@@ -234,7 +217,6 @@ let g:ale_fix_on_save = 1
     \ 'javascript': ['prettier'],
     \ 'javascript.jsx': ['prettier'],
     \ 'typescript': ['prettier'],
-    \ 'typescriptreact': ['prettier'],
     \ 'html': ['prettier'],
     \ 'css': ['prettier'],
     \ 'scss': ['prettier'],
@@ -269,25 +251,6 @@ au FileType go nmap <C-k> <Plug>(go-info)
 
 " work around to coverage works with github.com/agiledragon/gomonkey/
 cab GoCoverage GoCoverage -gcflags=all=-l
-
-" ====== jedi-vim ======
-let g:jedi#goto_command = "<C-]>"
-let g:jedi#usages_command = "<leader>gr"
-let g:jedi#rename_command = "<leader>rn"
-let g:jedi#completions_enabled = 0
-
-" ===== LanguageClient-neovim =====
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ 'typescript': ['javascript-typescript-stdio'],
-    \ 'typescriptreact': ['javascript-typescript-stdio'],
-\ }
-
-" javascript
-au FileType javascript,javascript.jsx,typescript,typescriptreact nnoremap <C-k> :call LanguageClient#textDocument_hover()<CR>
-au FileType javascript,javascript.jsx,typescript,typescriptreact nnoremap <C-]> :call LanguageClient#textDocument_definition()<CR>
-au FileType javascript,javascript.jsx,typescript,typescriptreact nmap <Leader>rn :call LanguageClient#textDocument_rename()<CR>
 
 " ===== vim-airline =====
 if !exists('g:airline_symbols')

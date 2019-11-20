@@ -67,14 +67,12 @@ install-neovim:
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
 	#install plugins
-	yarn global add typescript-eslint-parser typescript
-	. ~/.nvm.bash && npm install -g javascript-typescript-langserver
+	. ~/.nvm.bash && npm install -g typescript-eslint-parser typescript
 	mkdir -p ~/.config/nvim
 	ln -sf `pwd`/init.vim ~/.config/nvim/init.vim
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	nvim --noplugin +PlugInstall +qall
-	. ~/.nvm.bash && cd ~/.config/nvim/plugged/YouCompleteMe && \
-		python3 install.py
+	cd ~/.config/nvim/plugged/YouCompleteMe && python3 install.py
 
 install-docker:
 	sudo curl -fsSL https://get.docker.com | bash
