@@ -15,7 +15,7 @@ rmqq() {
     qq
 }
 
-alias kubesh='pod=$(kubectl get pods | cut -f1 -d" " | fzf); kubectl exec -ti $pod bash || kubectl exec -ti $pod sh'
+alias kubesh='pod=$(kubectl get pods -o custom-columns=":metadata.name" --no-headers | fzf); kubectl exec -ti $pod bash || kubectl exec -ti $pod sh'
 alias kubeusecontext='context=$(kubectl config get-contexts -o name | fzf); kubectl config use-context $context'
 
 whoseport() {
