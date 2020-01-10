@@ -16,6 +16,7 @@ rmqq() {
 }
 
 alias kubesh='pod=$(kubectl get pods | cut -f1 -d" " | fzf); kubectl exec -ti $pod bash || kubectl exec -ti $pod sh'
+alias kubeusecontext='context=$(kubectl config get-contexts -o name | fzf); kubectl config use-context $context'
 
 whoseport() {
     lsof -i ":$1" | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} LISTEN
