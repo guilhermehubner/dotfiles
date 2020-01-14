@@ -23,6 +23,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'guilhermehubner/dracula-vim', { 'as': 'dracula' }
 
+" Highlight search only when searching
+Plug 'romainl/vim-cool'
+
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
