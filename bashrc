@@ -28,7 +28,12 @@ bold="\[$(tput bold)\]"
 clear_attributes="\[$(tput sgr0)\]"
 
 # Custom bash prompt - "➜  ~ (master) "
-export PS1="${bold}${green}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
+PROMPT_COMMAND='\
+    if [ $? -eq 0 ]; then \
+        export PS1="${bold}${green}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
+    else\
+        export PS1="${bold}${red}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
+    fi'
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
