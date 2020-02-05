@@ -21,3 +21,16 @@ alias kubeusecontext='context=$(kubectl config get-contexts -o name | fzf); kube
 whoseport() {
     lsof -i ":$1" | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} LISTEN
 }
+
+generate_jwt() {
+    if [ $# -ne 3 ]; then
+        echo "Please provide key type, jwt body and the private key"
+        return 1
+    fi
+
+    HEADER=`echo -n \{\"alg\":\"$1\",\"typ\":\"JWT\"\} | base64 | sed s/\+/-/g | sed -E s/=+$//g | sed 's/\//_/g'`
+    PAYLOAD=`echo -n $2 | base64 | sed s/\+/-/g | sed -E s/=+$//g | sed 's/\//_/g'`
+    BODY=`echo -n "$HEADER.$PAYLOAD" | openssl dgst -sha256 -sign $3 -binary | base64 | sed s/\+/-/g | sed -E s/=+$//g | sed 's/\//_/g'`
+    echo "$HEADER.$PAYLOAD.$BODY" | tr -d '\n'
+    echo
+}
