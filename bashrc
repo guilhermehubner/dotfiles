@@ -28,19 +28,24 @@ bold="\[$(tput bold)\]"
 clear_attributes="\[$(tput sgr0)\]"
 
 # Custom bash prompt - "➜  ~ (master) "
-PROMPT_COMMAND='\
-    if [ $? -eq 0 ]; then \
+prompt_command_func() {
+    CODE=$?
+
+    # Record each line as it gets issued
+    history -a
+
+    if [ $CODE -eq 0 ]; then \
         export PS1="${bold}${green}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
     else\
         export PS1="${bold}${red}➜ ${blue}\W ${cyan}\$(parse_git_branch)${magenta}\\$ ${clear_attributes}"
-    fi'
+    fi
+}
+
+PROMPT_COMMAND=prompt_command_func
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export PATH=$PATH:/usr/local/go/bin:~/go/bin
-
-# Record each line as it gets issued
-PROMPT_COMMAND='history -a'
 
 # Huge history. Doesn't appear to slow things down, so why not?
 HISTSIZE=500000
