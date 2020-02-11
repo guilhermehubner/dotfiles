@@ -63,3 +63,5 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 
 [ -f ~/.fzf.bash ] && . ~/.fzf.bash
 [ -f ~/.nvm.bash ] && . ~/.nvm.bash
+
+source <(kubectl completion bash)
