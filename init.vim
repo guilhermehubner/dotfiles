@@ -44,14 +44,6 @@ colorscheme dracula_bold
 hi Comment ctermfg=39
 set t_Co=256
 
-highlight clear SignColumn     " SignColumn should match background
-highlight clear LineNr         " Current line number row will have same background color in relative mode
-highlight LineNr ctermfg=240
-highlight Normal ctermbg=NONE
-highlight NonText ctermbg=NONE
-highlight SpecialKey ctermbg=NONE ctermfg=240
-highlight MatchParen cterm=bold ctermbg=none ctermfg=208
-
 " Mark column limit for languages
 autocmd BufRead,BufNewFile *.go let &colorcolumn=join(range(101,2000),",")
 autocmd BufRead,BufNewFile *.py let &colorcolumn=join(range(81,2000),",")
