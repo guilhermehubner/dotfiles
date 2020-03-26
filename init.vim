@@ -48,6 +48,8 @@ set t_Co=256
 autocmd BufRead,BufNewFile *.go let &colorcolumn=join(range(101,2000),",")
 autocmd BufRead,BufNewFile *.py let &colorcolumn=join(range(81,2000),",")
 
+" increase max memory to show syntax highlighting for large files
+set maxmempattern=20000
 
 " No spellcheck
 set nospell
