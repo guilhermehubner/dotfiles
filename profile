@@ -19,3 +19,5 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 export GOPATH=$HOME/go
+setxkbmap -option caps:swapescape
+xdotool key Caps_Lock
