@@ -197,9 +197,19 @@ set completeopt-=preview
 autocmd BufEnter *.tsx set filetype=typescript
 
 au FileType javascript,typescript,python nnoremap <C-k> :YcmCompleter GetType<CR>
-au FileType javascript,typescript,python nnoremap <C-]> :YcmCompleter GoTo<CR>
-au FileType javascript,typescript,python nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
-au FileType javascript,typescript nmap <Leader>rn :YcmCompleter RefactorRename
+au FileType php nnoremap <C-k> :YcmCompleter GetHover<CR>
+au FileType javascript,typescript,python,php nnoremap <C-]> :YcmCompleter GoTo<CR>
+au FileType javascript,typescript,python,php nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+au FileType javascript,typescript,php nnoremap <Leader>rn :YcmCompleter RefactorRename
+
+let g:ycm_language_server =
+  \ [
+  \   {
+  \     'name': 'php',
+  \     'cmdline': [ 'intelephense', '--stdio' ],
+  \     'filetypes': [ 'php' ]
+  \   }
+  \ ]
 
 " ====== ale ======
 let g:ale_lint_on_text_changed = 'never'

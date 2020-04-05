@@ -67,7 +67,7 @@ install-neovim:
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
 	#install plugins
-	. ~/.nvm.bash && npm install -g typescript-eslint-parser typescript
+	. ~/.nvm.bash && npm install -g typescript-eslint-parser typescript intelephense
 	mkdir -p ~/.config/nvim
 	ln -sf `pwd`/init.vim ~/.config/nvim/init.vim
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
