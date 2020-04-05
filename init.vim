@@ -195,12 +195,13 @@ let g:ycm_key_list_previous_completion = ['<C-p>']
 set completeopt-=preview
 
 autocmd BufEnter *.tsx set filetype=typescript
+autocmd BufEnter *.rb set filetype=ruby
 
 au FileType javascript,typescript,python nnoremap <C-k> :YcmCompleter GetType<CR>
-au FileType php nnoremap <C-k> :YcmCompleter GetHover<CR>
-au FileType javascript,typescript,python,php nnoremap <C-]> :YcmCompleter GoTo<CR>
-au FileType javascript,typescript,python,php nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
-au FileType javascript,typescript,php nnoremap <Leader>rn :YcmCompleter RefactorRename
+au FileType php,ruby nnoremap <C-k> :YcmCompleter GetHover<CR>
+au FileType javascript,typescript,python,php,ruby nnoremap <C-]> :YcmCompleter GoTo<CR>
+au FileType javascript,typescript,python,php,ruby nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+au FileType javascript,typescript,php,ruby nnoremap <Leader>rn :YcmCompleter RefactorRename
 
 let g:ycm_language_server =
   \ [
@@ -208,6 +209,11 @@ let g:ycm_language_server =
   \     'name': 'php',
   \     'cmdline': [ 'intelephense', '--stdio' ],
   \     'filetypes': [ 'php' ]
+  \   },
+  \   {
+  \     'name': 'ruby',
+  \     'cmdline': [ 'solargraph', 'stdio' ],
+  \     'filetypes': [ 'ruby' ],
   \   }
   \ ]
 
