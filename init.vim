@@ -161,6 +161,11 @@ inoremap <leader>h <Esc>:sp<CR>
 nnoremap <leader>wh :windo wincmd K<CR>
 nnoremap <leader>wv :windo wincmd H<CR>
 
+nnoremap <Up> :resize +2<CR>
+nnoremap <Down> :resize -2<CR>
+nnoremap <Left> :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
+
 " Tabs
 nnoremap <leader>t :tabe<CR>
 inoremap <leader>t <Esc>:tabe<CR>
