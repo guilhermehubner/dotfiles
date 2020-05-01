@@ -15,6 +15,9 @@ Plug 'w0rp/ale'
 " GO
 Plug 'fatih/vim-go'
 
+" PHP
+Plug 'phpactor/phpactor', { 'do': 'composer install' }
+
 " Autocomplete
 Plug 'Valloric/YouCompleteMe'
 
@@ -203,18 +206,13 @@ autocmd BufEnter *.tsx set filetype=typescript
 autocmd BufEnter *.rb set filetype=ruby
 
 au FileType javascript,typescript,python nnoremap <C-k> :YcmCompleter GetType<CR>
-au FileType php,ruby nnoremap <C-k> :YcmCompleter GetHover<CR>
-au FileType javascript,typescript,python,php,ruby nnoremap <C-]> :YcmCompleter GoTo<CR>
-au FileType javascript,typescript,python,php,ruby nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
-au FileType javascript,typescript,php,ruby nnoremap <Leader>rn :YcmCompleter RefactorRename
+au FileType ruby nnoremap <C-k> :YcmCompleter GetHover<CR>
+au FileType javascript,typescript,python,ruby nnoremap <C-]> :YcmCompleter GoTo<CR>
+au FileType javascript,typescript,python,ruby nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+au FileType javascript,typescript,ruby nnoremap <Leader>rn :YcmCompleter RefactorRename
 
 let g:ycm_language_server =
   \ [
-  \   {
-  \     'name': 'php',
-  \     'cmdline': [ 'intelephense', '--stdio' ],
-  \     'filetypes': [ 'php' ]
-  \   },
   \   {
   \     'name': 'ruby',
   \     'cmdline': [ 'solargraph', 'stdio' ],
@@ -280,6 +278,19 @@ au FileType go nmap <C-k> <Plug>(go-info)
 " work around to coverage works with github.com/agiledragon/gomonkey/
 cab GoCoverage GoCoverage -gcflags=all=-l
 
+" ==== phpactor ====
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+
+au FileType php nmap <C-]> :call phpactor#GotoDefinition()<CR>
+au FileType php nmap <Leader>gr :call phpactor#FindReferences()<CR>
+au FileType php nmap <C-k> :call phpactor#Hover()<CR>
+
+au FileType php nmap <Leader>pp :call phpactor#Transform()<CR>
+au FileType php nmap <Leader>ga :call phpactor#GenerateAccessor()<CR>
+au FileType php nmap <Leader>i :call phpactor#UseAdd()<CR>
+au FileType php nmap <Leader>ia :call phpactor#ImportMissingClasses()<CR>
+au FileType php nmap <Leader>cm :call phpactor#ContextMenu()<CR>
+
 " ===== vim-airline =====
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -294,5 +305,5 @@ let g:airline#extensions#branch#enabled = 1
 let $FZF_DEFAULT_COMMAND = 'ag -l -g "" --ignore-dir=vendor/'
 nnoremap <silent> <C-p> :FZF<CR>
 
-" vim-gitgutter
+" ==== vim-gitgutter ====
 set updatetime=250
