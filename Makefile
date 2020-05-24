@@ -2,7 +2,7 @@ PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 YARN_PPA=deb https://dl.yarnpkg.com/debian/ stable main
 
-DOCKER_COMPOSE_VERSION=1.24.1
+DOCKER_COMPOSE_VERSION=$(shell curl -Ls -o /dev/null -w %{url_effective} https://github.com/docker/compose/releases/latest |xargs basename)
 DOCKER_COMPOSE_URL=https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(shell uname -s)-$(shell uname -m)
 
 ARCHITETURE=$(shell dpkg --print-architecture)
