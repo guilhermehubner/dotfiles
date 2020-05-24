@@ -70,6 +70,7 @@ install-neovim:
 	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 	chmod u+x nvim.appimage
 	sudo mv nvim.appimage /usr/bin/nvim
+	python3 -m pip install --user --upgrade pynvim
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
 	#install plugins
