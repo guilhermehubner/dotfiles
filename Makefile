@@ -25,6 +25,8 @@ config-bash:
 	ln -sf `pwd`/nvm.bash ~/.nvm.bash
 	mkdir -p ~/.config/terminator
 	ln -sf `pwd`/terminator-config ~/.config/terminator/config
+	mkdir -p ~/.config/autostart
+	ln -sf `pwd`/remap.desktop ~/.config/autostart/remap.desktop
 
 init:
 	sudo apt update
