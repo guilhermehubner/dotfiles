@@ -64,10 +64,12 @@ install-yarn:
 	sudo apt install yarn -y
 
 install-neovim:
-	#install neovim
-	sudo apt-add-repository ppa:neovim-ppa/stable -y
 	sudo apt update
-	sudo apt install neovim fonts-powerline -y
+	sudo apt install fonts-powerline -y
+	#install neovim
+	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+	chmod u+x nvim.appimage
+	sudo mv nvim.appimage /usr/bin/nvim
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
 	#install plugins
