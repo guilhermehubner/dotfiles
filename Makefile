@@ -5,10 +5,8 @@ YARN_PPA=deb https://dl.yarnpkg.com/debian/ stable main
 DOCKER_COMPOSE_VERSION=1.24.1
 DOCKER_COMPOSE_URL=https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(shell uname -s)-$(shell uname -m)
 
-GO_VERSION=1.13
 ARCHITETURE=$(shell dpkg --print-architecture)
-GO_FILE_NAME=go${GO_VERSION}.linux-${ARCHITETURE}.tar.gz
-GO_URL=https://dl.google.com/go/${GO_FILE_NAME}
+GO_BASE_URL=https://dl.google.com/go/go
 export PATH:=$(PATH):/usr/local/go/bin:~/go/bin
 
 NVM_VERSION=v0.34.0
@@ -42,11 +40,15 @@ init:
 		exec terminator
 
 install-go:
-	wget ${GO_URL}
+	curl --silent https://golang.org/dl/ 2>&1 |\
+		ag -o '${GO_BASE_URL}([0-9.]+).linux-${ARCHITETURE}.tar.gz' |\
+		sed 's,${GO_BASE_URL}\([0-9.]\+\).linux-${ARCHITETURE}.tar.gz,\1,g' |\
+		sort -V | tail -n 1 | xargs -I@ echo ${GO_BASE_URL}@.linux-${ARCHITETURE}.tar.gz |\
+		xargs -I@ wget -O go.tar.gz @
 	mkdir tmp
-	tar xzf ${GO_FILE_NAME} -C tmp/
+	tar xzf go.tar.gz -C tmp/
 	sudo cp -r tmp/* /usr/local/
-	rm -rf ${GO_FILE_NAME} tmp
+	rm -rf go.tar.gz tmp
 
 install-nvm:
 	git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR}
