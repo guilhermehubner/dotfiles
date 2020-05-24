@@ -9,7 +9,7 @@ ARCHITETURE=$(shell dpkg --print-architecture)
 GO_BASE_URL=https://dl.google.com/go/go
 export PATH:=$(PATH):/usr/local/go/bin:~/go/bin
 
-NVM_VERSION=v0.34.0
+NVM_VERSION=$(shell curl -Ls -o /dev/null -w %{url_effective} https://github.com/nvm-sh/nvm/releases/latest |xargs basename)
 export NVM_DIR="${HOME}/.nvm"
 
 KUBECTL_VERSION=$(shell curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
