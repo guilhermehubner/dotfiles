@@ -28,7 +28,7 @@ config-bash:
 
 init:
 	sudo apt update
-	sudo apt install vim htop terminator meld git fonts-hack-ttf \
+	sudo apt install vim htop terminator meld git fonts-hack-ttf xclip \
 		software-properties-common curl python3-pip setxkbmap xdotool \
 		apt-transport-https ca-certificates wget silversearcher-ag -y
 	# disable swap
