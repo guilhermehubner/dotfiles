@@ -79,7 +79,7 @@ install-neovim:
 	ln -sf `pwd`/init.vim ~/.config/nvim/init.vim
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	nvim --noplugin +PlugInstall +qall
-	cd ~/.config/nvim/plugged/YouCompleteMe && python3 install.py
+	cd ~/.config/nvim/plugged/YouCompleteMe && python3 install.py --go-completer
 
 install-docker:
 	sudo curl -fsSL https://get.docker.com | bash
