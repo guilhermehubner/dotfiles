@@ -6,7 +6,6 @@ DOCKER_COMPOSE_VERSION=$(shell curl -Ls -o /dev/null -w %{url_effective} https:/
 DOCKER_COMPOSE_URL=https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(shell uname -s)-$(shell uname -m)
 
 ARCHITETURE=$(shell dpkg --print-architecture)
-GO_BASE_URL=https://dl.google.com/go/go
 export PATH:=$(PATH):/usr/local/go/bin:~/go/bin
 
 NVM_VERSION=$(shell curl -Ls -o /dev/null -w %{url_effective} https://github.com/nvm-sh/nvm/releases/latest |xargs basename)
@@ -41,9 +40,9 @@ init:
 
 install-go:
 	curl --silent https://golang.org/dl/ 2>&1 |\
-		ag -o '${GO_BASE_URL}([0-9.]+).linux-${ARCHITETURE}.tar.gz' |\
-		sed 's,${GO_BASE_URL}\([0-9.]\+\).linux-${ARCHITETURE}.tar.gz,\1,g' |\
-		sort -V | tail -n 1 | xargs -I@ echo ${GO_BASE_URL}@.linux-${ARCHITETURE}.tar.gz |\
+		ag -o '/dl/go([0-9.]+).linux-${ARCHITETURE}.tar.gz' |\
+		sed 's,/dl/go\([0-9.]\+\).linux-${ARCHITETURE}.tar.gz,\1,g' |\
+		sort -V | tail -n 1 | xargs -I@ echo https://golang.org/dl/go@.linux-${ARCHITETURE}.tar.gz |\
 		xargs -I@ wget -O go.tar.gz @
 	mkdir tmp
 	tar xzf go.tar.gz -C tmp/
