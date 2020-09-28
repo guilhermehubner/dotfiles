@@ -1,4 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=remap
-Exec=/usr/bin/setxkbmap -option caps:swapescape
