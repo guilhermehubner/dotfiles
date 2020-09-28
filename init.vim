@@ -36,6 +36,9 @@ Plug 'tpope/vim-fugitive'
 " Highlights Syntax
 Plug 'sheerun/vim-polyglot'
 
+" Breakpoint support
+Plug 'puremourning/vimspector'
+
 call plug#end()
 
 "*****************************************************************************
@@ -311,3 +314,11 @@ nnoremap <silent> <C-p> :FZF<CR>
 
 " ==== vim-gitgutter ====
 set updatetime=250
+
+" ==== vimspector ====
+let g:vimspector_enable_mappings = 'HUMAN'
+nmap <leader>n :call vimspector#StepOver()<CR>
+nmap <leader>m :call vimspector#StepInto()<CR>
+nmap <leader>b :call vimspector#ToggleBreakpoint()<CR>
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>ds :call vimspector#Stop()<CR>
