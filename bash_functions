@@ -34,3 +34,23 @@ generate_jwt() {
     echo "$HEADER.$PAYLOAD.$BODY" | tr -d '\n'
     echo
 }
+
+vimspector_go() {
+    read -p 'enter path of main file: ' MAIN_FILE
+    echo $MAIN_FILE
+    cat <<EOF > .vimspector.json
+{
+    "configurations": {
+        "run": {
+            "adapter": "vscode-go",
+            "configuration": {
+                "request": "launch",
+                "program": "\${workspaceRoot}/$MAIN_FILE",
+                "mode": "debug",
+                "dlvToolPath": "$HOME/go/bin/dlv"
+            }
+        }
+    }
+}
+EOF
+}
