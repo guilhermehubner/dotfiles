@@ -54,3 +54,17 @@ vimspector_go() {
 }
 EOF
 }
+
+audio_cpu() {
+    for (( i=0; i<=$(cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor | wc -l); i++ ))
+    do
+        sudo cpufreq-set -c $i -g performance
+    done
+}
+
+normal_cpu() {
+    for (( i=0; i<=$(cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor | wc -l); i++ ))
+    do
+        sudo cpufreq-set -c $i -g powersave
+    done
+}

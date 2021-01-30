@@ -26,7 +26,7 @@ config-bash:
 init:
 	sudo apt update
 	sudo apt install vim htop terminator meld git fonts-hack-ttf xclip \
-		software-properties-common curl python3-pip xdotool \
+		software-properties-common curl python3-pip xdotool cpufrequtils \
 		apt-transport-https ca-certificates wget silversearcher-ag -y
 	# disable swap
 	sudo swapoff -a
