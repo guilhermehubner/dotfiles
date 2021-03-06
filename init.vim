@@ -39,6 +39,9 @@ Plug 'sheerun/vim-polyglot'
 " Breakpoint support
 Plug 'puremourning/vimspector'
 
+" Fold yaml
+Plug 'pedrohdz/vim-yaml-folds'
+
 call plug#end()
 
 "*****************************************************************************
@@ -212,17 +215,17 @@ set completeopt-=preview
 autocmd BufEnter *.tsx set filetype=typescript
 autocmd BufEnter *.rb set filetype=ruby
 
-au FileType javascript,typescript,python nnoremap <C-k> :YcmCompleter GetType<CR>
+au FileType javascript,typescript,python,c,cpp nnoremap <C-k> :YcmCompleter GetType<CR>
 au FileType ruby nnoremap <C-k> :YcmCompleter GetHover<CR>
-au FileType javascript,typescript,python,ruby nnoremap <C-]> :YcmCompleter GoTo<CR>
-au FileType javascript,typescript,python,ruby nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
-au FileType javascript,typescript,ruby nnoremap <Leader>rn :YcmCompleter RefactorRename
+au FileType javascript,typescript,python,ruby,c,cpp nnoremap <C-]> :YcmCompleter GoTo<CR>
+au FileType javascript,typescript,python,ruby,c,cpp nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+au FileType javascript,typescript,ruby,c,cpp nnoremap <Leader>rn :YcmCompleter RefactorRename
 
 let g:ycm_language_server =
   \ [
   \   {
   \     'name': 'ruby',
-  \     'cmdline': [ 'solargraph', 'stdio' ],
+  \     'cmdline': [ '/home/guilherme/.gem/bin/solargraph', 'stdio' ],
   \     'filetypes': [ 'ruby' ],
   \   }
   \ ]
