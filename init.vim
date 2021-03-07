@@ -225,8 +225,13 @@ let g:ycm_language_server =
   \ [
   \   {
   \     'name': 'ruby',
-  \     'cmdline': [ '/home/guilherme/.gem/bin/solargraph', 'stdio' ],
+  \     'cmdline': [ $HOME.'/.gem/bin/solargraph', 'stdio' ],
   \     'filetypes': [ 'ruby' ],
+  \   },
+  \   {
+  \     'name': 'kubernetes',
+  \     'cmdline': [ 'yaml-language-server', '--stdio' ],
+  \     'filetypes': [ 'yaml' ],
   \   }
   \ ]
 
