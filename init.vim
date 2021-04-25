@@ -229,7 +229,7 @@ let g:ycm_language_server =
   \     'filetypes': [ 'ruby' ],
   \   },
   \   {
-  \     'name': 'kubernetes',
+  \     'name': 'yaml',
   \     'cmdline': [ 'yaml-language-server', '--stdio' ],
   \     'filetypes': [ 'yaml' ],
   \   }
