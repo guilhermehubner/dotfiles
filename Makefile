@@ -20,21 +20,30 @@ config-bash:
 	ln -sf `pwd`/bashrc ~/.bashrc
 	ln -sf `pwd`/profile ~/.profile
 	ln -sf `pwd`/nvm.bash ~/.nvm.bash
-	mkdir -p ~/.config/terminator
-	ln -sf `pwd`/terminator-config ~/.config/terminator/config
 
 init:
 	sudo apt update
-	sudo apt install vim htop terminator meld git fonts-hack-ttf xclip \
+	sudo apt install vim htop tmux meld git fonts-hack-ttf xclip \
 		software-properties-common curl python3-pip xdotool cpufrequtils \
 		apt-transport-https ca-certificates wget silversearcher-ag -y
 	# disable swap
 	sudo swapoff -a
 	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
 	ln -sf `pwd`/gitconfig ~/.gitconfig
-	# set deepin terminal as default
-	gsettings set org.gnome.desktop.default-applications.terminal \
-		exec terminator
+	ln -sf `pwd`/tmux.conf ~/.tmux.conf
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	~/.tmux/plugins/tpm/scripts/install_plugins.sh
+
+install-alacritty:
+	docker run -v `pwd`:/export --rm rust:1 bash /export/install_alacritty.sh
+	sudo mv alacritty /usr/bin/
+	mkdir ~/.icons
+	mv alacritty-simple.svg ~/.icons/
+	sed -i'' "s,Icon=Alacritty,Icon=${HOME}/.icons/alacritty-simple.svg," Alacritty.desktop
+	mv Alacritty.desktop ~/.local/share/applications/
+	gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
+	mkdir -p ~/.config/alacritty
+	ln -sf `pwd`/alacritty.yml ~/.config/alacritty/alacritty.yml
 
 install-go:
 	curl --silent https://golang.org/dl/ 2>&1 |\
@@ -100,4 +109,5 @@ install: \
 	install-neovim \
 	install-docker \
 	install-docker-compose \
-	install-kubectl
+	install-kubectl \
+	install-alacritty
