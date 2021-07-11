@@ -82,7 +82,8 @@ install-neovim:
 	#install plugins
 	. ~/.nvm.bash && npm install -g typescript-eslint-parser typescript
 	mkdir -p ~/.config/nvim
-	ln -sf `pwd`/init.vim ~/.config/nvim/init.vim
+	ln -sf `pwd`/nvim/init.vim ~/.config/nvim/init.vim
+	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	nvim --noplugin +PlugInstall +qall
 	cd ~/.config/nvim/plugged/YouCompleteMe && python3 install.py --go-completer
