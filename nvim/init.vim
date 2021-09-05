@@ -5,17 +5,13 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" General linting and fixers
-Plug 'w0rp/ale'
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'gfanto/fzf-lsp.nvim'
 
-" GO
-Plug 'fatih/vim-go'
-
-" PHP
-Plug 'phpactor/phpactor', { 'do': 'composer install' }
-
-" Autocomplete
-Plug 'Valloric/YouCompleteMe'
+" Go Coverage
+Plug 'rafaelsq/nvim-goc.lua'
 
 " UI plugins
 Plug 'vim-airline/vim-airline'
@@ -30,7 +26,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Highlights Syntax
-Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " Breakpoint support
 Plug 'puremourning/vimspector'

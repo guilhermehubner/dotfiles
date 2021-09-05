@@ -2,9 +2,6 @@ PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 YARN_PPA=deb https://dl.yarnpkg.com/debian/ stable main
 
-DOCKER_COMPOSE_VERSION=$(shell curl -Ls -o /dev/null -w %{url_effective} https://github.com/docker/compose/releases/latest |xargs basename)
-DOCKER_COMPOSE_URL=https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(shell uname -s)-$(shell uname -m)
-
 ARCHITETURE=$(shell dpkg --print-architecture)
 export PATH:=$(PATH):/usr/local/go/bin:~/go/bin
 
@@ -25,7 +22,7 @@ init:
 	sudo apt update
 	sudo apt install vim htop tmux meld git fonts-hack-ttf xclip \
 		software-properties-common curl python3-pip xdotool cpufrequtils \
-		apt-transport-https ca-certificates wget silversearcher-ag -y
+		apt-transport-https ca-certificates wget silversearcher-ag php composer -y
 	# disable swap
 	sudo swapoff -a
 	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
@@ -33,9 +30,11 @@ init:
 	ln -sf `pwd`/tmux.conf ~/.tmux.conf
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	~/.tmux/plugins/tpm/scripts/install_plugins.sh
+	# Remove annoying ubuntu customization on gnome
+	sudo apt remove gnome-shell-extension-ubuntu-dock -y 2>/dev/null; true
 
 install-alacritty:
-	docker run -v `pwd`:/export --rm rust:1 bash /export/install_alacritty.sh
+	sudo docker run -v `pwd`:/export --rm rust:1 bash /export/install_alacritty.sh
 	sudo mv alacritty /usr/bin/
 	mkdir ~/.icons
 	mv alacritty-simple.svg ~/.icons/
@@ -71,7 +70,7 @@ install-yarn:
 
 install-neovim:
 	sudo apt update
-	sudo apt install fonts-powerline -y
+	sudo apt install fonts-powerline yapf3 python3-autopep8 flake8 mypy -y
 	#install neovim
 	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 	chmod u+x nvim.appimage
@@ -79,27 +78,29 @@ install-neovim:
 	python3 -m pip install --user --upgrade pynvim
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs ${PLUG_URL}
-	#install plugins
-	. ~/.nvm.bash && npm install -g typescript-eslint-parser typescript
 	mkdir -p ~/.config/nvim
 	ln -sf `pwd`/nvim/init.vim ~/.config/nvim/init.vim
 	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	nvim --noplugin +PlugInstall +qall
-	cd ~/.config/nvim/plugged/YouCompleteMe && python3 install.py --go-completer
 
 install-docker:
 	sudo curl -fsSL https://get.docker.com | bash
 	sudo usermod -aG docker ${USER}
 
-install-docker-compose:
-	sudo curl -L ${DOCKER_COMPOSE_URL} -o /usr/local/bin/docker-compose
-	sudo chmod +x /usr/local/bin/docker-compose
-
 install-kubectl:
 	curl -LO ${KUBECTL_URL}
 	chmod +x ./kubectl
 	sudo mv ./kubectl /usr/local/bin/kubectl
+
+install-lsp:
+	GO111MODULE=on go get -u golang.org/x/tools/gopls@latest
+	. ~/.nvm.bash && npm install -g typescript-eslint-parser typescript pyright
+	git clone https://github.com/phpactor/phpactor.git ~/.phpactor
+	cd ~/.phpactor && composer install --ignore-platform-reqs --no-dev && \
+		sudo ln -sf `pwd`/bin/phpactor /usr/local/bin/phpactor
+	# General use LSP
+	go get -u github.com/mattn/efm-langserver
 
 install: \
 	config-bash \
@@ -109,6 +110,6 @@ install: \
 	install-yarn \
 	install-neovim \
 	install-docker \
-	install-docker-compose \
 	install-kubectl \
-	install-alacritty
+	install-alacritty \
+	install-lsp

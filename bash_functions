@@ -4,13 +4,26 @@ parse_git_branch() {
 
 qq() {
     clear
-    local gpath="${GOPATH:-$HOME/go}"
-    "${gpath%%:*}/src/github.com/y0ssar1an/q/q.sh" "$@"
+
+    logpath="$TMPDIR/q"
+    if [[ -z "$TMPDIR" ]]; then
+        logpath="/tmp/q"
+    fi
+
+    if [[ ! -f "$logpath" ]]; then
+        echo 'Q LOG' > "$logpath"
+    fi
+
+    tail -100f -- "$logpath"
 }
 
 rmqq() {
-    if [[ -f "$TMPDIR/q" ]]; then
-        rm "$TMPDIR/q"
+    logpath="$TMPDIR/q"
+    if [[ -z "$TMPDIR" ]]; then
+        logpath="/tmp/q"
+    fi
+    if [[ -f "$logpath" ]]; then
+        rm "$logpath"
     fi
     qq
 }
