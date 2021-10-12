@@ -65,3 +65,7 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 [ -f ~/.nvm.bash ] && . ~/.nvm.bash
 
 source <(kubectl completion bash)
+
+if command -v neofetch &> /dev/null; then
+    neofetch
+fi
