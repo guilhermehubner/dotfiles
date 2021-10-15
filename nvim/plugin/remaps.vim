@@ -1,3 +1,7 @@
+" Set the space as leader key
+nnoremap <SPACE> <Nop>
+map <Space> <Leader>
+
 " Split
 nnoremap <leader>v :vsp<CR>
 inoremap <leader>v <Esc>:vsp<CR>
