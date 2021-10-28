@@ -1,5 +1,3 @@
-PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 YARN_PPA=deb https://dl.yarnpkg.com/debian/ stable main
 
 ARCHITETURE=$(shell dpkg --print-architecture)
@@ -76,13 +74,13 @@ install-neovim:
 	chmod u+x nvim.appimage
 	sudo mv nvim.appimage /usr/bin/nvim
 	python3 -m pip install --user --upgrade pynvim
-	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
-		--create-dirs ${PLUG_URL}
+	git clone --depth 1 https://github.com/wbthomason/packer.nvim \
+		~/.local/share/nvim/site/pack/packer/start/packer.nvim
 	mkdir -p ~/.config/nvim
-	ln -sf `pwd`/nvim/init.vim ~/.config/nvim/init.vim
+	ln -sf `pwd`/nvim/init.lua ~/.config/nvim/init.lua
 	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
-	nvim --noplugin +PlugInstall +qall
+	nvim --noplugin +PackerCompile +PackerInstall +qall
 
 install-docker:
 	sudo curl -fsSL https://get.docker.com | bash

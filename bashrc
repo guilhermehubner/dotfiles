@@ -47,6 +47,8 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 export PATH=$PATH:/usr/local/go/bin:~/go/bin
 
+export BAT_THEME=ansi-dark
+
 # Huge history. Doesn't appear to slow things down, so why not?
 HISTSIZE=500000
 HISTFILESIZE=100000
