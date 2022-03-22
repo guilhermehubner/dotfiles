@@ -150,7 +150,7 @@ lsp.efm.setup {
     settings = {rootMarkers = {'.git/'}, languages = efm_languages}
 }
 
-local servers = {'tsserver', 'pyright', 'phpactor', 'solargraph'}
+local servers = {'tsserver', 'pyright', 'phpactor', 'solargraph', 'clangd'}
 for _, l in ipairs(servers) do
     lsp[l].setup {
         on_attach = on_attach,

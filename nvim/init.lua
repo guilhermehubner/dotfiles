@@ -13,7 +13,7 @@ return require('packer').startup(function(use)
     use {'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/nvim-cmp', 'gfanto/fzf-lsp.nvim'}
 
     -- Go Coverage
-    use {'rafaelsq/nvim-goc.lua', after = 'guilhermehubner/dracula-vim'}
+    use {'rafaelsq/nvim-goc.lua', after = 'dracula', {as = 'nvim-goc'}}
 
     -- UI plugins
     use {'guilhermehubner/dracula-vim', {as = 'dracula'}}
