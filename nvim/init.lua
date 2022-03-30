@@ -10,7 +10,10 @@ return require('packer').startup(function(use)
     use {'hrsh7th/cmp-vsnip', 'hrsh7th/vim-vsnip'}
 
     -- LSP
-    use {'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/nvim-cmp', 'gfanto/fzf-lsp.nvim'}
+    use {
+        'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/nvim-cmp', 'gfanto/fzf-lsp.nvim',
+        'hrsh7th/cmp-nvim-lsp-signature-help'
+    }
 
     -- Go Coverage
     use {'rafaelsq/nvim-goc.lua', after = 'dracula', {as = 'nvim-goc'}}
