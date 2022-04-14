@@ -9,12 +9,19 @@ export NVM_DIR="${HOME}/.nvm"
 KUBECTL_VERSION=$(shell curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 
-config-bash:
+link:
 	ln -sf `pwd`/bash_aliases ~/.bash_aliases
 	ln -sf `pwd`/bash_functions ~/.bash_functions
 	ln -sf `pwd`/bashrc ~/.bashrc
 	ln -sf `pwd`/profile ~/.profile
 	ln -sf `pwd`/nvm.bash ~/.nvm.bash
+	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
+	ln -sf `pwd`/gitconfig ~/.gitconfig
+	ln -sf `pwd`/tmux.conf ~/.tmux.conf
+	ln -sf `pwd`/alacritty.yml ~/.config/alacritty/alacritty.yml
+	ln -sf `pwd`/nvim/init.lua ~/.config/nvim/init.lua
+	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
+	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 
 init:
 	sudo apt update
@@ -23,9 +30,6 @@ init:
 		apt-transport-https ca-certificates wget silversearcher-ag php composer -y
 	# disable swap
 	sudo swapoff -a
-	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
-	ln -sf `pwd`/gitconfig ~/.gitconfig
-	ln -sf `pwd`/tmux.conf ~/.tmux.conf
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	~/.tmux/plugins/tpm/scripts/install_plugins.sh
 	# Remove annoying ubuntu customization on gnome
@@ -40,7 +44,6 @@ install-alacritty:
 	mv Alacritty.desktop ~/.local/share/applications/
 	gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
 	mkdir -p ~/.config/alacritty
-	ln -sf `pwd`/alacritty.yml ~/.config/alacritty/alacritty.yml
 
 install-go:
 	curl --silent https://golang.org/dl/ 2>&1 |\
@@ -77,9 +80,6 @@ install-neovim:
 	git clone --depth 1 https://github.com/wbthomason/packer.nvim \
 		~/.local/share/nvim/site/pack/packer/start/packer.nvim
 	mkdir -p ~/.config/nvim
-	ln -sf `pwd`/nvim/init.lua ~/.config/nvim/init.lua
-	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
-	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	nvim --noplugin +PackerCompile +PackerInstall +qall
 
 install-docker:
@@ -101,7 +101,7 @@ install-lsp:
 	go get -u github.com/mattn/efm-langserver
 
 install: \
-	config-bash \
+	link \
 	init \
 	install-go \
 	install-nvm \
