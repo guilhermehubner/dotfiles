@@ -1,0 +1,62 @@
+configuration {
+	display-drun: ">_ ";
+	display-windows: "windows";
+	drun-display-format: "{icon} {name}";
+	modi: "drun,window";
+	show-icons: true;
+}
+
+@theme "/dev/null"
+
+* {
+  bg: #44475a;
+  fg: #f8f8f2;
+  green: #50fa7b;
+  selected-bg: #bd93f9;
+
+  background-color: @bg;
+
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+}
+
+window {
+  width: 40%;
+}
+
+
+element {
+  padding: 4 4;
+  text-color: @fg;
+}
+
+element selected {
+  background-color: @selected-bg;
+}
+
+element-text {
+  background-color: inherit;
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+
+element-icon {
+  size: 20;
+}
+
+element-icon selected {
+  size: 20;
+  background-color: @selected-bg;
+}
+
+entry {
+  padding: 4 0;
+  text-color: @fg;
+}
+
+prompt {
+  text-color: @green;
+  padding: 4;
+}

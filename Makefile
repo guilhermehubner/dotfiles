@@ -10,6 +10,9 @@ KUBECTL_VERSION=$(shell curl -s https://storage.googleapis.com/kubernetes-releas
 KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 
 link:
+	mkdir -p ~/.config/alacritty
+	mkdir -p ~/.config/nvim
+	mkdir -p ~/.config/rofi
 	ln -sf `pwd`/bash_aliases ~/.bash_aliases
 	ln -sf `pwd`/bash_functions ~/.bash_functions
 	ln -sf `pwd`/bashrc ~/.bashrc
@@ -22,6 +25,7 @@ link:
 	ln -sf `pwd`/nvim/init.lua ~/.config/nvim/init.lua
 	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
+	ln -sf `pwd`/rofi_config.rasi ~/.config/rofi/config.rasi
 
 init:
 	sudo apt update
