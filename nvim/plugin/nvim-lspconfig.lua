@@ -4,6 +4,7 @@ local on_attach = function(client, bufnr)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
+
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
@@ -58,7 +59,17 @@ lsp.gopls.setup {
 
 lsp.sumneko_lua.setup {
     cmd = {'lua-language-server'},
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+        local supports_method = client.supports_method
+
+        client.supports_method = function(method)
+            if method == 'textDocument/formatting' then return false end
+
+            return supports_method(method)
+        end
+
+        on_attach(client, bufnr)
+    end,
     settings = {
         Lua = {
             runtime = {
@@ -160,15 +171,20 @@ for _, l in ipairs(servers) do
 end
 
 function OrganizeImports(wait_ms)
-    local params = vim.lsp.util.make_range_params()
-    params.context = {only = {'source.organizeImports'}}
-    local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
-    for _, res in pairs(result or {}) do
-        for _, r in pairs(res.result or {}) do
-            if r.edit then
-                vim.lsp.util.apply_workspace_edit(r.edit)
-            else
-                vim.lsp.buf.execute_command(r.command)
+    local clients = vim.lsp.buf_get_clients()
+
+    for _, client in pairs(clients) do
+        local params = vim.lsp.util.make_range_params()
+        params.context = {only = {'source.organizeImports'}}
+
+        local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
+        for _, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+                if r.edit then
+                    vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
+                else
+                    vim.lsp.buf.execute_command(r.command)
+                end
             end
         end
     end
