@@ -13,6 +13,7 @@ link:
 	mkdir -p ~/.config/alacritty
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/rofi
+	mkdir -p ~/.dwm
 	ln -sf `pwd`/bash_aliases ~/.bash_aliases
 	ln -sf `pwd`/bash_functions ~/.bash_functions
 	ln -sf `pwd`/bashrc ~/.bashrc
@@ -26,6 +27,8 @@ link:
 	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	ln -sf `pwd`/rofi_config.rasi ~/.config/rofi/config.rasi
+	ln -sf `pwd`/autostart.sh ~/.dwm/autostart.sh
+	ln -sf `pwd`/dwmwatcher.sh ~/.dwm/dwmwatcher.sh
 
 init:
 	sudo apt update
