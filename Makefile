@@ -31,6 +31,7 @@ link:
 	ln -sf `pwd`/autostart.sh ~/.dwm/autostart.sh
 	ln -sf `pwd`/dwmwatcher.sh ~/.dwm/dwmwatcher.sh
 	ln -sf `pwd`/dunstrc ~/.config/dunst/dunstrc
+	sudo ln -sf `pwd`/i3lock@.service /etc/systemd/system/i3lock@.service
 
 init:
 	sudo apt update
