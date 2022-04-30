@@ -19,7 +19,7 @@ update_mons() {
 
 pactl subscribe | grep --line-buffered "sink" | while read line;
 do
-	dunstify -I ~/.icons/Dracula/actions/16/player-volume.svg -t 800 -h int:value:`pamixer --get-volume | tr -d '\n'` volume
+	dunstify -r 2593 -I ~/.icons/Dracula/actions/16/player-volume.svg -t 800 -h int:value:`pamixer --get-volume | tr -d '\n'` volume
 
 	update_status
 done&
