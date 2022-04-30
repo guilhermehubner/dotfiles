@@ -17,7 +17,12 @@ update_mons() {
 	esac
 }
 
-pactl subscribe | grep --line-buffered "sink" | while read line; do update_status; done&
+pactl subscribe | grep --line-buffered "sink" | while read line;
+do
+	dunstify -I ~/.icons/Dracula/actions/16/player-volume.svg -t 800 -h int:value:`pamixer --get-volume | tr -d '\n'` volume
+
+	update_status
+done&
 
 iwevent | while read line; do update_status; done&
 

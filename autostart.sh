@@ -11,4 +11,6 @@ picom -f &
 
 ~/.fehbg &
 
+dunst &
+
 ~/.dwm/dwmwatcher.sh &
