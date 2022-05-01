@@ -6,7 +6,7 @@ update_status() {
 	WIFI=`iwgetid -r`
 	BATTERY=`acpi | cut -d: -f2- | cut -d, -f2 | tr -d '% '`
 
-	xsetroot -name "  $VOLUME |  $WIFI |  $BATTERY | $TIME"
+	xsetroot -name "  $VOLUME |  $WIFI |  $BATTERY | $TIME"
 }
 
 update_mons() {
