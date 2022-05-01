@@ -4,8 +4,9 @@ update_status() {
 	TIME=`date +'%a %d %b %H:%M'`
 	VOLUME=`pamixer --get-volume | tr -d '\n'`
 	WIFI=`iwgetid -r`
+	BATTERY=`acpi | cut -d: -f2- | cut -d, -f2 | tr -d '% '`
 
-	xsetroot -name "  $VOLUME |  $WIFI | $TIME"
+	xsetroot -name "  $VOLUME |  $WIFI |  $BATTERY | $TIME"
 }
 
 update_mons() {
