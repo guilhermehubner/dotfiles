@@ -13,13 +13,13 @@ update_mons() {
 		*"closed"*)
 			xrandr --output eDP-1 --off;;
 		*"open"*)
-			xrandr --output eDP-1 --auto --same-as HDMI-1 --left-of HDMI-1;;
+			xrandr --output eDP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 1920x0 --rotate normal;;
 	esac
 }
 
 trap 'killall dwmwatcher.sh' EXIT
 
-pactl subscribe | grep --line-buffered "sink" | while read line;
+pactl subscribe | grep --line-buffered "sink" | grep --line-buffered -v "sink-input" | while read line;
 do
 	dunstify -r 2593 -I ~/.icons/Dracula/actions/16/player-volume.svg -t 800 -h int:value:`pamixer --get-volume | tr -d '\n'` volume
 
