@@ -1,5 +1,7 @@
 #!/bin/bash
 
+setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+
 case `cat /proc/acpi/button/lid/LID0/state` in
 	*"closed"*)
 		xrandr --output eDP-1 --off;;

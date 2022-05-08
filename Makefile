@@ -31,6 +31,8 @@ link:
 	ln -sf `pwd`/autostart.sh ~/.dwm/autostart.sh
 	ln -sf `pwd`/dwmwatcher.sh ~/.dwm/dwmwatcher.sh
 	ln -sf `pwd`/dunstrc ~/.config/dunst/dunstrc
+	ln -sf `pwd`/gtkrc-2.0 ~/.gtkrc-2.0
+	ln -sf `pwd`/gtk-3.0 ~/.config/gtk-3.0
 
 init:
 	sudo apt update
