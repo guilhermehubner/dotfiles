@@ -5,5 +5,4 @@ vim.g.netrw_banner = 0
 vim.g.netrw_list_hide = '.*\\.swp$,.*\\.pyc'
 
 -- Allow netrw to remove non-empty local directories
-
 vim.g.netrw_localrmdir = 'rm -r'

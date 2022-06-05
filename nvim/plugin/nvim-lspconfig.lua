@@ -30,10 +30,11 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_set_keymap('i', '<C-k>', '<ESC>:lua vim.lsp.buf.signature_help()<CR>a', {})
     vim.api.nvim_set_keymap('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>', {})
 
-    if client.resolved_capabilities.code_lens then
-        vim.api.nvim_exec(
-            [[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]],
-            false)
+    if type(client.server_capabilities.codeLensProvider) == 'table' then
+        buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
+
+        vim.api.nvim_create_autocmd('CursorHold,CursorHoldI,InsertLeave',
+                                    {callback = vim.lsp.codelens.refresh})
     end
 end
 
@@ -170,14 +171,14 @@ for _, l in ipairs(servers) do
     }
 end
 
-function OrganizeImports(wait_ms)
+function OrganizeImports()
     local clients = vim.lsp.buf_get_clients()
 
     for _, client in pairs(clients) do
-        local params = vim.lsp.util.make_range_params()
+        local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
         params.context = {only = {'source.organizeImports'}}
 
-        local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
+        local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 5000)
         for _, res in pairs(result or {}) do
             for _, r in pairs(res.result or {}) do
                 if r.edit then
@@ -190,10 +191,15 @@ function OrganizeImports(wait_ms)
     end
 end
 
-vim.cmd('autocmd BufWritePre *.go :lua OrganizeImports(1000)')
+vim.api.nvim_create_autocmd('BufWritePre', {pattern = '*.go', callback = OrganizeImports})
 
-vim.cmd(
-    'autocmd BufWritePre *.py,*.go,*.ts,*.js,*.lua,*.json,*.html,*.css,*.scss,*.sass,*.md,*.graphql :lua vim.lsp.buf.formatting_sync()')
+vim.api.nvim_create_autocmd('BufWritePre', {
+    pattern = {
+        '*.py', '*.go', '*.ts', '*.js', '*.lua', '*.json', '*.html', '*.css', '*.scss', '*.sass',
+        '*.md', '*.graphql'
+    },
+    callback = vim.lsp.buf.formatting_sync
+})
 
 local fzf_lsp = require 'fzf_lsp'
 

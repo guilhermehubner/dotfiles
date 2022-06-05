@@ -1,5 +1,6 @@
 -- Syntax for file extensions
-vim.cmd('autocmd BufRead,BufNewFile *.qtpl set filetype=html')
+vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'},
+                            {pattern = '*.qtpl', command = 'set filetype=html'})
 
 -- Remove useless spaces at EOF on save
-vim.cmd('autocmd BufWritePre * %s/\\s\\+$//e')
+vim.api.nvim_create_autocmd('BufWritePre', {pattern = '*', command = '%s/\\s\\+$//e'})
