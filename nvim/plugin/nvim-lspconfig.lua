@@ -27,8 +27,8 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<c-j>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
 
-    vim.keymap.set('i', '<C-k>', '<ESC>:lua vim.lsp.buf.signature_help()<CR>a', {})
-    vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>', {})
+    vim.api.nvim_set_keymap('i', '<C-k>', '<ESC>:lua vim.lsp.buf.signature_help()<CR>a', {})
+    vim.api.nvim_set_keymap('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>', {})
 
     if type(client.server_capabilities.codeLensProvider) == 'table' then
         buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
