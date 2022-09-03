@@ -15,6 +15,7 @@ link:
 	mkdir -p ~/.config/rofi
 	mkdir -p ~/.config/dunst
 	mkdir -p ~/.dwm
+	mkdir -p ~/.ssh
 	ln -sf `pwd`/bash_aliases ~/.bash_aliases
 	ln -sf `pwd`/bash_functions ~/.bash_functions
 	ln -sf `pwd`/bashrc ~/.bashrc
@@ -33,6 +34,7 @@ link:
 	ln -sf `pwd`/dunstrc ~/.config/dunst/dunstrc
 	ln -sf `pwd`/gtkrc-2.0 ~/.gtkrc-2.0
 	ln -sf `pwd`/gtk-3.0 ~/.config/gtk-3.0
+	ln -sf `pwd`/sshconfig ~/.ssh/config
 
 init:
 	sudo apt update

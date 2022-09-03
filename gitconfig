@@ -7,3 +7,5 @@
     editor = 'nvim'
 [difftool "meld"]
     cmd = meld "$LOCAL" "$REMOTE"
+[url "ssh://git@github.com/guilhermehubner"]
+	insteadOf = https://github.com/guilhermehubner
