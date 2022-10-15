@@ -40,13 +40,11 @@ end
 
 local lsp = require 'lspconfig'
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {'documentation', 'detail', 'additionalTextEdits'}
 }
-
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noinsert'

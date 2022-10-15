@@ -1,9 +1,9 @@
 local goc = require 'nvim-goc'
 goc.setup({verticalSplit = true})
 
-vim.highlight.link('GocNormal', 'Comment', true)
-vim.highlight.link('GocCovered', 'DraculaGreen', true)
-vim.highlight.link('GocUncovered', 'DraculaRed', true)
+vim.api.nvim_set_hl(0, 'GocNormal', {link = 'Comment'})
+vim.api.nvim_set_hl(0, 'GocCovered', {link = 'DraculaGreen'})
+vim.api.nvim_set_hl(0, 'GocUncovered', {link = 'DraculaRed'})
 
 vim.cmd('command! -nargs=* -bang GoCoverage lua require("nvim-goc").Coverage()')
 vim.cmd('command! -nargs=* -bang GoCoverageClear lua require("nvim-goc").ClearCoverage()')
