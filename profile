@@ -19,3 +19,5 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 export GOPATH=$HOME/go
+
+setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
