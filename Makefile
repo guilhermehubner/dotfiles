@@ -35,6 +35,7 @@ link:
 	ln -sf `pwd`/gtkrc-2.0 ~/.gtkrc-2.0
 	ln -sf `pwd`/gtk-3.0 ~/.config/gtk-3.0
 	ln -sf `pwd`/sshconfig ~/.ssh/config
+	ln -sf `pwd`/Xkbmap ~/.Xkbmap
 
 init:
 	sudo apt update
