@@ -63,7 +63,7 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 [ -f ~/.bash_functions ] && . ~/.bash_functions
 [ -f ~/.bash_local ] && . ~/.bash_local
 
-[ -f ~/.fzf.bash ] && . ~/.fzf.bash
+[ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 [ -f ~/.nvm.bash ] && . ~/.nvm.bash
 
 # source <(kubectl completion bash)

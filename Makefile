@@ -39,7 +39,7 @@ link:
 
 init:
 	sudo apt update
-	sudo apt install vim htop tmux meld git fonts-hack-ttf xclip \
+	sudo apt install vim htop tmux meld git fonts-hack-ttf xclip ripgrep \
 		software-properties-common curl python3-pip xdotool cpufrequtils \
 		apt-transport-https ca-certificates wget silversearcher-ag php composer -y
 	# disable swap

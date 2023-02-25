@@ -60,3 +60,9 @@ vim.cmd('cab Wq wq')
 vim.cmd('cab wQ wq')
 vim.cmd('cab WQ wq')
 vim.cmd('cab Q  q')
+
+-- Quickfix
+vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>qc', ':cclose<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>qn', ':cn<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>qp', ':cp<CR>', {})

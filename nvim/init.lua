@@ -3,17 +3,17 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- Fuzzy search (ctrl p)
-    use {{'junegunn/fzf', dir = '~/.fzf', run = './install --all'}, {'junegunn/fzf.vim'}}
-
     -- Snippet
     use {'hrsh7th/cmp-vsnip', 'hrsh7th/vim-vsnip'}
 
     -- LSP
     use {
-        'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/nvim-cmp', 'gfanto/fzf-lsp.nvim',
+        'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/nvim-cmp',
         'hrsh7th/cmp-nvim-lsp-signature-help'
     }
+
+    -- Navigation / Finder
+    use {'nvim-telescope/telescope.nvim', tag = '0.1.1'}
 
     -- Dependency for some plugins
     use 'nvim-lua/plenary.nvim'

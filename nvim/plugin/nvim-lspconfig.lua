@@ -17,8 +17,6 @@ local on_attach = function(client, bufnr)
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<leader>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
     buf_set_keymap('n', '<leader>gf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     buf_set_keymap('v', '<leader>gf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
@@ -56,7 +54,7 @@ lsp.gopls.setup {
     init_options = {analyses = {unusedparams = true}, codelenses = {gc_details = true, test = true}}
 }
 
-lsp.sumneko_lua.setup {
+lsp.lua_ls.setup {
     cmd = {'lua-language-server'},
     on_attach = function(client, bufnr)
         local supports_method = client.supports_method
@@ -83,10 +81,7 @@ lsp.sumneko_lua.setup {
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
-                }
+                library = vim.api.nvim_get_runtime_file('', true)
             }
         }
     }
@@ -198,24 +193,3 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     },
     callback = vim.lsp.buf.formatting_sync
 })
-
-local fzf_lsp = require 'fzf_lsp'
-
-local function filter(fn)
-    return (function(...)
-        return (function(err, method, result, client_id, bufnr)
-            if vim.tbl_islist(result) then
-                result = vim.tbl_filter(function(v)
-                    return string.find(v.uri, '_test.go') == nil and string.find(v.uri, 'mock')
-                               == nil
-                end, result)
-            end
-
-            fn(err, method, result, client_id, bufnr)
-        end)(...)
-    end)
-end
-
-vim.lsp.handlers['textDocument/implementation'] = filter(fzf_lsp.implementation_handler)
-
-vim.lsp.handlers['textDocument/references'] = filter(fzf_lsp.references_handler)
