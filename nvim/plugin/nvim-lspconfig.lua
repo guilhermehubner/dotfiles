@@ -191,5 +191,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
         '*.py', '*.go', '*.ts', '*.js', '*.lua', '*.json', '*.html', '*.css', '*.scss', '*.sass',
         '*.md', '*.graphql'
     },
-    callback = vim.lsp.buf.formatting_sync
+    callback = function()
+        vim.lsp.buf.format({async = false})
+    end
 })
