@@ -22,7 +22,7 @@ trap 'killall dwmwatcher.sh' EXIT
 
 pactl subscribe | grep --line-buffered "sink" | grep --line-buffered -v "sink-input" | while read line;
 do
-	dunstify -r 2593 -I ~/.icons/Dracula/actions/16/player-volume.svg -t 800 -h int:value:`pamixer --get-volume | tr -d '\n'` volume
+	dunstify -r 2593 -I ~/.icons/Wings-Dark-Icons/actions/16/player-volume.svg -t 800 -h int:value:`pamixer --get-volume | tr -d '\n'` volume
 
 	update_status
 done &

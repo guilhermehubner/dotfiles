@@ -19,10 +19,10 @@ return require('packer').startup(function(use)
     use 'nvim-lua/plenary.nvim'
 
     -- Go Coverage
-    use {'rafaelsq/nvim-goc.lua', after = 'dracula', {as = 'nvim-goc'}}
+    use {'rafaelsq/nvim-goc.lua', {as = 'nvim-goc'}}
 
     -- UI plugins
-    use {'guilhermehubner/dracula-vim', {as = 'dracula'}}
+    use {'folke/tokyonight.nvim'}
 
     -- Highlight search only when searching
     use 'romainl/vim-cool'

@@ -42,7 +42,7 @@
     notification_limit = 0
 
     ### Progress bar ###
-	highlight = "#8be9fd" #color
+	highlight = "#c0caf5" #color
 
     # Turn on the progess bar. It appears when a progress hint is passed with
     # for example dunstify -h int:value:12
@@ -90,7 +90,7 @@
     frame_width = 1
 
     # Defines color of the frame around the notification window.
-    frame_color = "#bd93f9"
+    frame_color = "#bb9af7"
 
     # Define a color for the separator.
     # possible values are:
@@ -111,8 +111,7 @@
     # idle_threshold = 120
 
     ### Text ###
-
-    font = Hack 10
+    font = FiraCode Nerd Font Mono 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -197,7 +196,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_path = ~/.icons/Wings-Dark-Icons/status/16/:~/.icons/Wings-Dark-Icons/devices/16/
 
     ### History ###
 
@@ -301,26 +300,28 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#282a36"
-    foreground = "#f8f8f2"
+    background = "#1f2335"
+    foreground = "#c0caf5"
+    frame_color = "#c0caf5"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
-    default_icon = ~/.icons/Dracula/actions/16/documentinfo.svg
+    default_icon = ~/.icons/Wings-Dark-Icons/actions/16/documentinfo.svg
 
 [urgency_normal]
-    background = "#282a36"
-    foreground = "#f8f8f2"
+    background = "#24283b"
+    foreground = "#c0caf5"
+    frame_color = "#c0caf5"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
-    default_icon = ~/.icons/Dracula/actions/16/documentinfo.svg
+    default_icon = ~/.icons/Wings-Dark-Icons/actions/16/documentinfo.svg
 
 [urgency_critical]
-    background = "#282a36"
-    foreground = "#ff5555"
-    frame_color = "#ff5555"
+    background = "#292e42"
+    foreground = "#db4b4b"
+    frame_color = "#db4b4b"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
-    default_icon = ~/.icons/Dracula/Places/16/folder-important.svg
+    default_icon = ~/.icons/Wings-Dark-Icons/places/16/folder-important.svg
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

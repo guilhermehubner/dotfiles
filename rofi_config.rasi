@@ -4,15 +4,16 @@ configuration {
 	drun-display-format: "{icon} {name}";
 	modi: "drun,window";
 	show-icons: true;
+	icon-theme: "Wings-Dark-Icons";
 }
 
 @theme "/dev/null"
 
 * {
-  bg: #44475a;
-  fg: #f8f8f2;
-  green: #50fa7b;
-  selected-bg: #bd93f9;
+  bg: #24283b;
+  fg: #c0caf5;
+  blue: #7dcfff;
+  selected-bg: #7aa2f7;
 
   background-color: @bg;
 
@@ -57,6 +58,6 @@ entry {
 }
 
 prompt {
-  text-color: @green;
+  text-color: @blue;
   padding: 4;
 }
