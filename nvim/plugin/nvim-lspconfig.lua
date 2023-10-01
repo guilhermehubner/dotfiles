@@ -13,7 +13,7 @@ local on_attach = function(client, bufnr)
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
-    local opts = {noremap = true, silent = true}
+    local opts = { noremap = true, silent = true }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -24,43 +24,52 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', '<c-j>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-
-    vim.api.nvim_set_keymap('i', '<C-k>', '<ESC>:lua vim.lsp.buf.signature_help()<CR>a', {})
-    vim.api.nvim_set_keymap('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>', {})
+    buf_set_keymap('n', '<C-k>', ':lua vim.lsp.buf.hover()<CR>', {})
 
     if type(client.server_capabilities.codeLensProvider) == 'table' then
         buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
 
-        vim.api.nvim_create_autocmd('CursorHold,CursorHoldI,InsertLeave',
-                                    {callback = vim.lsp.codelens.refresh})
+        vim.api.nvim_create_autocmd(
+            'CursorHold,CursorHoldI,InsertLeave',
+            { callback = vim.lsp.codelens.refresh }
+        )
     end
 end
 
-local lsp = require 'lspconfig'
+local lsp = require('lspconfig')
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {'documentation', 'detail', 'additionalTextEdits'}
+    properties = { 'documentation', 'detail', 'additionalTextEdits' },
 }
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noinsert'
 
-lsp.gopls.setup {
+lsp.gopls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-    flags = {debounce_text_changes = 150},
-    init_options = {analyses = {unusedparams = true}, codelenses = {gc_details = true, test = true}}
-}
+    flags = { debounce_text_changes = 150 },
+    settings = {
+        gopls = {
+            analyses = { unusedparams = true },
+            staticcheck = true,
+            gofumpt = true,
+            codelenses = { gc_details = true, test = true, generate = true },
+        },
+    },
+})
 
-lsp.lua_ls.setup {
-    cmd = {'lua-language-server'},
+lsp.lua_ls.setup({
+    cmd = { 'lua-language-server' },
     on_attach = function(client, bufnr)
         local supports_method = client.supports_method
 
         client.supports_method = function(method)
-            if method == 'textDocument/formatting' then return false end
+            if method == 'textDocument/formatting' then
+                return false
+            end
 
             return supports_method(method)
         end
@@ -73,95 +82,30 @@ lsp.lua_ls.setup {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                 version = 'LuaJIT',
                 -- Setup your lua path
-                path = vim.split(package.path, ';')
+                path = vim.split(package.path, ';'),
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = {'vim'}
+                globals = { 'vim' },
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('', true)
-            }
-        }
-    }
-}
+                library = {
+                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                    [vim.fn.stdpath('config') .. '/lua'] = true,
+                },
+            },
+        },
+    },
+})
 
-local prettier = {
-    formatCommand = 'prettier --stdin-filepath ${INPUT} ${--config-precedence:configPrecedence}',
-    formatStdin = true
-}
-
-local yapf = {formatCommand = '/usr/bin/yapf3 --quiet', formatStdin = true}
-
-local autopep8 = {formatCommand = '/usr/bin/autopep8 -', formatStdin = true}
-
-local flake8 = {
-    lintCommand = '/usr/bin/flake8 --format \'%(path)s:%(row)d:%(col)d: %(code)s %(code)s %(text)s\' --stdin-display-name ${INPUT} -',
-    lintStdin = true,
-    lintIgnoreExitCode = true,
-    lintFormats = {'%f:%l:%c: %t%n%n%n %m'},
-    lintSource = 'flake8'
-}
-
-local mypy = {
-    lintCommand = '/usr/bin/mypy --show-column-numbers --ignore-missing-imports',
-    lintFormats = {'%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m', '%f:%l:%c: %tote: %m'},
-    lintSource = 'mypy'
-}
-
-local golangcilint = {lintCommand = 'golangci-lint run', lintSource = 'golanci-lint'}
-
-local lua_format = {
-    formatCommand = 'lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=100 --break-after-table-lb --double-quote-to-single-quote',
-    formatStdin = true
-}
-
-local efm_languages = {
-    lua = {lua_format},
-    python = {yapf, autopep8, flake8, mypy},
-    typescript = {prettier},
-    javascript = {prettier},
-    typescriptreact = {prettier},
-    javascriptreact = {prettier},
-    json = {prettier},
-    html = {prettier},
-    css = {prettier},
-    scss = {prettier},
-    sass = {prettier},
-    markdown = {prettier},
-    graphql = {prettier},
-    go = {golangcilint}
-}
-
-local efm_filetypes = {}
-for k, _ in pairs(efm_languages) do table.insert(efm_filetypes, k) end
-
-lsp.efm.setup {
-    filetypes = efm_filetypes,
-    on_attach = function(client, bufnr)
-        local supports_method = client.supports_method
-
-        client.supports_method = function(method)
-            local is_go = vim.api.nvim_buf_get_name(bufnr):match('^.+(%..+)$') == '.go'
-
-            if method == 'textDocument/formatting' and is_go then return false end
-
-            return supports_method(method)
-        end
-    end,
-    init_options = {documentFormatting = true},
-    root_dir = vim.loop.cwd,
-    settings = {rootMarkers = {'.git/'}, languages = efm_languages}
-}
-
-local servers = {'tsserver', 'pyright', 'phpactor', 'solargraph', 'clangd'}
+local servers = { 'tsserver', 'pyright', 'phpactor', 'solargraph', 'clangd' }
 for _, l in ipairs(servers) do
-    lsp[l].setup {
+    lsp[l].setup({
         on_attach = on_attach,
         capabilities = capabilities,
-        flags = {debounce_text_changes = 150}
-    }
+        flags = { debounce_text_changes = 150 },
+    })
 end
 
 function OrganizeImports()
@@ -169,7 +113,7 @@ function OrganizeImports()
 
     for _, client in pairs(clients) do
         local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
-        params.context = {only = {'source.organizeImports'}}
+        params.context = { only = { 'source.organizeImports' } }
 
         local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 5000)
         for _, res in pairs(result or {}) do
@@ -184,14 +128,4 @@ function OrganizeImports()
     end
 end
 
-vim.api.nvim_create_autocmd('BufWritePre', {pattern = '*.go', callback = OrganizeImports})
-
-vim.api.nvim_create_autocmd('BufWritePre', {
-    pattern = {
-        '*.py', '*.go', '*.ts', '*.js', '*.lua', '*.json', '*.html', '*.css', '*.scss', '*.sass',
-        '*.md', '*.graphql'
-    },
-    callback = function()
-        vim.lsp.buf.format({async = false})
-    end
-})
+vim.api.nvim_create_autocmd('BufWritePre', { pattern = '*.go', callback = OrganizeImports })

@@ -13,7 +13,7 @@ return require('packer').startup(function(use)
     }
 
     -- Navigation / Finder
-    use {'nvim-telescope/telescope.nvim', tag = '0.1.1'}
+    use {'nvim-telescope/telescope.nvim', branch = '0.1.x'}
 
     -- Dependency for some plugins
     use 'nvim-lua/plenary.nvim'
@@ -36,9 +36,10 @@ return require('packer').startup(function(use)
     -- Breakpoint support
     use 'puremourning/vimspector'
 
-    -- Fold yaml
-    use 'pedrohdz/vim-yaml-folds'
-
     -- Status Line
     use 'nvim-lualine/lualine.nvim'
+
+    -- Formatters and linters
+    use 'stevearc/conform.nvim'
+    use 'mfussenegger/nvim-lint'
 end)
