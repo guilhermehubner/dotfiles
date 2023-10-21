@@ -10,6 +10,7 @@ KUBECTL_VERSION=$(shell curl -s https://storage.googleapis.com/kubernetes-releas
 KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 
 link:
+	mkdir -p ~/.config/hypr/
 	mkdir -p ~/.config/alacritty
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/rofi
@@ -36,6 +37,9 @@ link:
 	ln -sf `pwd`/gtk-3.0 ~/.config/gtk-3.0
 	ln -sf `pwd`/sshconfig ~/.ssh/config
 	ln -sf `pwd`/Xkbmap ~/.Xkbmap
+	ln -sf `pwd`/hyprland.conf ~/.config/hypr/hyprland.conf
+	ln -sf `pwd`/waybar ~/.config/waybar
+	ln -sf `pwd`/wofi ~/.config/wofi
 
 init:
 	sudo apt update
