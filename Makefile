@@ -25,7 +25,7 @@ link:
 	ln -sf `pwd`/eslintrc.json ~/.eslintrc.json
 	ln -sf `pwd`/gitconfig ~/.gitconfig
 	ln -sf `pwd`/tmux.conf ~/.tmux.conf
-	ln -sf `pwd`/alacritty.yml ~/.config/alacritty/alacritty.yml
+	ln -sf `pwd`/alacritty.toml ~/.config/alacritty/alacritty.toml
 	ln -sf `pwd`/nvim/init.lua ~/.config/nvim/init.lua
 	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
