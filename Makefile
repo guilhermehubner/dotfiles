@@ -39,7 +39,6 @@ link:
 	ln -sf `pwd`/Xkbmap ~/.Xkbmap
 	ln -sf `pwd`/hyprland.conf ~/.config/hypr/hyprland.conf
 	ln -sf `pwd`/waybar ~/.config/waybar
-	ln -sf `pwd`/wofi ~/.config/wofi
 
 init:
 	sudo apt update
