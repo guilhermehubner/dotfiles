@@ -39,6 +39,8 @@ link:
 	ln -sf `pwd`/Xkbmap ~/.Xkbmap
 	ln -sf `pwd`/hyprland.conf ~/.config/hypr/hyprland.conf
 	ln -sf `pwd`/waybar ~/.config/waybar
+	mkdir -p ~/.config/mako
+	ln -sf `pwd`/mako ~/.config/mako/config
 
 init:
 	sudo apt update
