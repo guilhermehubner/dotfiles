@@ -40,7 +40,7 @@ size = 11.0
 family = "FiraCode Nerd Font Mono"
 style = "Medium"
 
-[shell]
+[terminal.shell]
 args = ["-c", "tmux"]
 program = "/bin/bash"
 
@@ -48,3 +48,5 @@ program = "/bin/bash"
 decorations = "none"
 opacity = 0.97
 startup_mode = "Maximized"
+
+[terminal]
