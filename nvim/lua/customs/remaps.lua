@@ -21,8 +21,8 @@ vim.api.nvim_set_keymap('n', '<Leader>ev', '<C-w>\\|', {})
 vim.api.nvim_set_keymap('n', '<Leader>ef', '<C-w>_<C-w>\\|', {})
 
 -- Don't yank on paste
-vim.api.nvim_set_keymap('x', 'p', '\'pgv"\'.v:register."y"', {expr = true})
-vim.api.nvim_set_keymap('x', 'P', '\'Pgv"\'.v:register."y"', {expr = true})
+vim.api.nvim_set_keymap('x', 'p', '\'pgv"\'.v:register."y"', { expr = true })
+vim.api.nvim_set_keymap('x', 'P', '\'Pgv"\'.v:register."y"', { expr = true })
 
 -- Avoid long line issues
 vim.api.nvim_set_keymap('', 'k', 'gk', {})
@@ -44,8 +44,8 @@ vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', {})
 vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', {})
 
 -- Tabs
-vim.api.nvim_set_keymap('n', '<C-h>', ':tabprevious<CR>', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-l>', ':tabnext<CR>', {silent = true})
+vim.api.nvim_set_keymap('n', '<C-h>', ':tabprevious<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':tabnext<CR>', { silent = true })
 
 -- No need for ex mode
 vim.api.nvim_set_keymap('n', 'Q', '<nop>', {})

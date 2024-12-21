@@ -1,6 +1,4 @@
--- increase max memory to show syntax highlighting for large files
-vim.opt.maxmempattern = 20000
-
+-- increase max memory to show syntax highlighting for large files vim.opt.maxmempattern = 20000
 -- No spellcheck
 vim.opt.spell = false
 
@@ -49,3 +47,6 @@ vim.opt.shiftwidth = 4
 
 -- Padding on j/k at least 5 lines from the screen end
 vim.opt.scrolloff = 5
+
+-- Reduce update time
+vim.opt.updatetime = 250

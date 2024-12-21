@@ -12,7 +12,6 @@ KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_
 link:
 	mkdir -p ~/.config/hypr/
 	mkdir -p ~/.config/alacritty
-	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/rofi
 	mkdir -p ~/.config/dunst
 	mkdir -p ~/.dwm
@@ -26,8 +25,7 @@ link:
 	ln -sf `pwd`/gitconfig ~/.gitconfig
 	ln -sf `pwd`/tmux.conf ~/.tmux.conf
 	ln -sf `pwd`/alacritty.toml ~/.config/alacritty/alacritty.toml
-	ln -sf `pwd`/nvim/init.lua ~/.config/nvim/init.lua
-	ln -sf `pwd`/nvim/plugin ~/.config/nvim/plugin
+	ln -sf `pwd`/nvim ~/.config/nvim
 	ln -sf `pwd`/prettierrc.yml ~/.prettierrc.yml
 	ln -sf `pwd`/rofi_config.rasi ~/.config/rofi/config.rasi
 	ln -sf `pwd`/autostart.sh ~/.dwm/autostart.sh
