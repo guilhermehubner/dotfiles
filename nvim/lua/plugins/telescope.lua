@@ -1,6 +1,6 @@
 return {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
+    version = '*',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
         { '<C-p>', ':Telescope find_files<CR>' },

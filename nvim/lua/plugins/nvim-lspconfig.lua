@@ -40,14 +40,12 @@ return {
             end
         end
 
-        local lsp = require('lspconfig')
-
         local capabilities = require('blink.cmp').get_lsp_capabilities()
 
         -- Set completeopt to have a better completion experience
         vim.o.completeopt = 'menuone,noinsert'
 
-        lsp.gopls.setup({
+        vim.lsp.config('gopls', {
             on_attach = on_attach,
             capabilities = capabilities,
             flags = { debounce_text_changes = 150 },
@@ -60,8 +58,9 @@ return {
                 },
             },
         })
+		vim.lsp.enable('gopls')
 
-        lsp.lua_ls.setup({
+        vim.lsp.config('lua_ls', {
             cmd = { 'lua-language-server' },
             on_attach = function(client, bufnr)
                 local supports_method = client.supports_method
@@ -98,14 +97,16 @@ return {
                 },
             },
         })
+		vim.lsp.enable('lua_ls')
 
         local servers = { 'ts_ls', 'pyright', 'phpactor', 'solargraph', 'clangd' }
         for _, l in ipairs(servers) do
-            lsp[l].setup({
+            vim.lsp.config(l, {
                 on_attach = on_attach,
                 capabilities = capabilities,
                 flags = { debounce_text_changes = 150 },
             })
+			vim.lsp.enable(l)
         end
 
         function OrganizeImports()
