@@ -1,5 +1,4 @@
 link:
-	mkdir -p ~/.config/hypr/
 	mkdir -p ~/.config/alacritty
 	mkdir -p ~/.config/rofi
 	mkdir -p ~/.config/dunst
@@ -24,7 +23,7 @@ link:
 	ln -sf `pwd`/gtk-3.0 ~/.config/gtk-3.0
 	ln -sf `pwd`/sshconfig ~/.ssh/config
 	ln -sf `pwd`/Xkbmap ~/.Xkbmap
-	ln -sf `pwd`/hyprland.conf ~/.config/hypr/hyprland.conf
+	ln -sf `pwd`/hypr ~/.config/hypr
 	ln -sf `pwd`/waybar ~/.config/waybar
 	mkdir -p ~/.config/mako
 	ln -sf `pwd`/mako ~/.config/mako/config
