@@ -110,25 +110,32 @@ return {
         end
 
         function OrganizeImports()
-            local clients = vim.lsp.get_clients()
+            local bufnr = vim.api.nvim_get_current_buf()
+            local clients = vim.lsp.get_clients({ bufnr = bufnr, method = 'textDocument/codeAction' })
 
-            for _, client in pairs(clients) do
-                local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
-                params.context = { only = { 'source.organizeImports' } }
+            for _, client in ipairs(clients) do
+                local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
+                params.context = { only = { 'source.organizeImports' }, diagnostics = {} }
 
-                local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 5000)
-                for _, res in pairs(result or {}) do
-                    for _, r in pairs(res.result or {}) do
-                        if r.edit then
-                            vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
-                        else
-                            vim.lsp.buf.execute_command(r.command)
-                        end
+                local res = client:request_sync('textDocument/codeAction', params, 5000, bufnr)
+                for _, r in pairs(res and res.result or {}) do
+                    if r.edit then
+                        vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
+                    end
+
+                    -- r is either a CodeAction (with an optional command table) or a bare Command
+                    local cmd = type(r.command) == 'table' and r.command or r
+                    if type(cmd.command) == 'string' then
+                        client:exec_cmd(cmd, { bufnr = bufnr })
                     end
                 end
             end
         end
 
-        vim.api.nvim_create_autocmd('BufWritePre', { pattern = '*.go', callback = OrganizeImports })
+        vim.api.nvim_create_autocmd('BufWritePre', {
+            group = vim.api.nvim_create_augroup('OrganizeImports', { clear = true }),
+            pattern = '*.go',
+            callback = OrganizeImports,
+        })
     end,
 }
