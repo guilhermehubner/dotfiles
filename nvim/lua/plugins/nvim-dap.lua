@@ -4,6 +4,7 @@ return {
     keys = {
         {
             '<leader>c',
+            desc = 'DAP: Start/continue debugging (loads .env)',
             function()
                 local cwd = vim.fn.getcwd()
                 local path = cwd .. '/.env'
@@ -36,36 +37,42 @@ return {
         },
         {
             '<leader>n',
+            desc = 'DAP: Step over',
             function()
                 require('dap').step_over()
             end,
         },
         {
             '<leader>i',
+            desc = 'DAP: Step into',
             function()
                 require('dap').step_into()
             end,
         },
         {
             '<leader>o',
+            desc = 'DAP: Step out',
             function()
                 require('dap').step_out()
             end,
         },
         {
             '<leader>b',
+            desc = 'DAP: Toggle breakpoint',
             function()
                 require('dap').toggle_breakpoint()
             end,
         },
         {
             '<leader>dt',
+            desc = 'DAP: Debug Go test under cursor',
             function()
                 require('dap-go').debug_test()
             end,
         },
         {
             '<leader>ds',
+            desc = 'DAP: Stop debugging',
             function()
                 require('dap').terminate()
                 require('dapui').close()
@@ -73,12 +80,14 @@ return {
         },
         {
             '<leader>dv',
+            desc = 'DAP: Evaluate expression under cursor',
             function()
                 require('dapui').eval(nil, { enter = true })
             end,
         },
         {
             '<leader>dl',
+            desc = 'DAP: List breakpoints',
             function()
                 require('dap').list_breakpoints()
 

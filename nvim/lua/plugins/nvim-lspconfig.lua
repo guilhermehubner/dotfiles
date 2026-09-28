@@ -5,31 +5,58 @@ return {
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         local on_attach = function(client, bufnr)
-            local function buf_set_keymap(...)
-                vim.api.nvim_buf_set_keymap(bufnr, ...)
+            -- Mappings.
+            local function buf_set_keymap(mode, lhs, rhs, desc)
+                vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, {
+                    noremap = true,
+                    silent = true,
+                    desc = 'LSP: ' .. desc,
+                })
             end
 
             -- Enable completion triggered by <c-x><c-o>
             vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', { buf = bufnr })
 
-            -- Mappings.
-            local opts = { noremap = true, silent = true }
-
             -- See `:help vim.lsp.*` for documentation on any of the below functions
-            buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-            buf_set_keymap('n', '<leader>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-            buf_set_keymap('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-            buf_set_keymap('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-            buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-            buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+            buf_set_keymap(
+                'n',
+                '<c-]>',
+                '<cmd>lua vim.lsp.buf.definition()<CR>',
+                'Go to definition'
+            )
+            buf_set_keymap(
+                'n',
+                '<leader>gs',
+                '<cmd>lua vim.lsp.buf.document_symbol()<CR>',
+                'List document symbols'
+            )
+            buf_set_keymap('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format file')
+            buf_set_keymap(
+                'v',
+                '<leader>gf',
+                '<cmd>lua vim.lsp.buf.format()<CR>',
+                'Format selection'
+            )
+            buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', 'Rename symbol')
+            buf_set_keymap(
+                'n',
+                '<leader>a',
+                '<cmd>lua vim.lsp.buf.code_action()<CR>',
+                'Code action'
+            )
             buf_set_keymap(
                 'n',
                 '<c-j>',
                 '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>',
-                opts
+                'Next diagnostic'
             )
-            buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-            buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+            buf_set_keymap(
+                'n',
+                '<leader>cl',
+                '<cmd>lua vim.lsp.codelens.run()<CR>',
+                'Run code lens'
+            )
+            buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.hover()<CR>', 'Hover documentation')
 
             if client:supports_method('textDocument/codeLens') then
                 vim.lsp.codelens.enable(true, { bufnr = bufnr })
