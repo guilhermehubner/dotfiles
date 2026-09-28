@@ -1,7 +1,10 @@
 return {
     'nvim-telescope/telescope.nvim',
     version = '*',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
     keys = {
         { '<C-p>', ':Telescope find_files<CR>', desc = 'Telescope: Find files' },
         {
@@ -27,4 +30,9 @@ return {
         },
     },
     opts = { defaults = { file_ignore_patterns = { '^vendor/' } } },
+    config = function(_, opts)
+        local telescope = require('telescope')
+        telescope.setup(opts)
+        pcall(telescope.load_extension, 'fzf')
+    end,
 }

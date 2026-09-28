@@ -12,7 +12,16 @@ return {
         signature = { enabled = true },
         sources = {
             -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
-            default = { 'lsp', 'path', 'snippets' },
+            -- 'lazydev' added (and ranked first via score_offset): in Lua files it completes
+            -- require() module names and Neovim/plugin APIs from lazydev.nvim.
+            default = { 'lazydev', 'lsp', 'path', 'snippets' },
+            providers = {
+                lazydev = {
+                    name = 'LazyDev',
+                    module = 'lazydev.integrations.blink',
+                    score_offset = 100,
+                },
+            },
         },
     },
 }

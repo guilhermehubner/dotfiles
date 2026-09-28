@@ -45,9 +45,15 @@ vim.opt.undolevels = 1000
 -- Set default tab to 4 spaces
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.softtabstop = 4
 
 -- Padding on j/k at least 5 lines from the screen end
 vim.opt.scrolloff = 5
 
 -- Reduce update time
 vim.opt.updatetime = 250
+
+-- Always reserve the sign column. Without this, text shifts one column right every time a
+-- gitsigns or diagnostic sign appears, and back when it goes away.
+vim.opt.signcolumn = 'yes'

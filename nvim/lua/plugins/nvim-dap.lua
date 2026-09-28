@@ -3,7 +3,7 @@ return {
     dependencies = { 'rcarriga/nvim-dap-ui', 'nvim-neotest/nvim-nio', 'leoluz/nvim-dap-go' },
     keys = {
         {
-            '<leader>c',
+            '<leader>dc',
             desc = 'DAP: Start/continue debugging (loads .env)',
             function()
                 local cwd = vim.fn.getcwd()
@@ -36,28 +36,28 @@ return {
             end,
         },
         {
-            '<leader>n',
+            '<leader>dn',
             desc = 'DAP: Step over',
             function()
                 require('dap').step_over()
             end,
         },
         {
-            '<leader>i',
+            '<leader>di',
             desc = 'DAP: Step into',
             function()
                 require('dap').step_into()
             end,
         },
         {
-            '<leader>o',
+            '<leader>do',
             desc = 'DAP: Step out',
             function()
                 require('dap').step_out()
             end,
         },
         {
-            '<leader>b',
+            '<leader>db',
             desc = 'DAP: Toggle breakpoint',
             function()
                 require('dap').toggle_breakpoint()
