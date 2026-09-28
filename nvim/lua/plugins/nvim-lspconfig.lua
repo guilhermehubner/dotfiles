@@ -18,25 +18,21 @@ return {
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
             buf_set_keymap('n', '<leader>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-            buf_set_keymap('n', '<leader>gf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-            buf_set_keymap('v', '<leader>gf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+            buf_set_keymap('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+            buf_set_keymap('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
             buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
             buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-            buf_set_keymap('n', '<c-j>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+            buf_set_keymap(
+                'n',
+                '<c-j>',
+                '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>',
+                opts
+            )
             buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-            buf_set_keymap('n', '<C-k>', ':lua vim.lsp.buf.hover()<CR>', {})
+            buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
-            if type(client.server_capabilities.codeLensProvider) == 'table' then
-                if #client.server_capabilities.codeLensProvider == 0 then
-                    return
-                end
-
-                buf_set_keymap('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-
-                vim.api.nvim_create_autocmd(
-                    'CursorHold,CursorHoldI,InsertLeave',
-                    { callback = vim.lsp.codelens.refresh }
-                )
+            if client:supports_method('textDocument/codeLens') then
+                vim.lsp.codelens.enable(true, { bufnr = bufnr })
             end
         end
 
@@ -62,16 +58,10 @@ return {
 
         vim.lsp.config('lua_ls', {
             cmd = { 'lua-language-server' },
+            capabilities = capabilities,
             on_attach = function(client, bufnr)
-                local supports_method = client.supports_method
-
-                client.supports_method = function(method)
-                    if method == 'textDocument/formatting' then
-                        return false
-                    end
-
-                    return supports_method(method)
-                end
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
 
                 on_attach(client, bufnr)
             end,

@@ -1,8 +1,9 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    opts = {
-        ensure_installed = {
-            -- 'help',
+    lazy = false,
+    build = ':TSUpdate',
+    config = function()
+        require('nvim-treesitter').install({
             'go',
             'lua',
             'javascript',
@@ -15,8 +16,13 @@ return {
             'python',
             'hcl',
             'graphql',
-        },
-        highlight = { enable = true },
-        incremental_selection = { enable = true },
-    },
+        })
+
+        vim.api.nvim_create_autocmd('FileType', {
+            group = vim.api.nvim_create_augroup('TreesitterHighlight', { clear = true }),
+            callback = function(args)
+                pcall(vim.treesitter.start, args.buf)
+            end,
+        })
+    end,
 }

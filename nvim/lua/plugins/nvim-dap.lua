@@ -8,12 +8,9 @@ return {
                 local cwd = vim.fn.getcwd()
                 local path = cwd .. '/.env'
 
-                local file = io.open(path, 'r')
-                if not file then
-                    return
-                end
+                local lines = vim.fn.filereadable(path) == 1 and vim.fn.readfile(path) or {}
 
-                for line in file:lines() do
+                for _, line in ipairs(lines) do
                     -- Trim whitespace
                     line = line:match('^%s*(.-)%s*$')
 
@@ -33,8 +30,6 @@ return {
                         end
                     end
                 end
-
-                file:close()
 
                 require('dap').continue()
             end,

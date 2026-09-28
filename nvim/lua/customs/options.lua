@@ -1,4 +1,5 @@
--- increase max memory to show syntax highlighting for large files vim.opt.maxmempattern = 20000
+-- increase max memory to show syntax highlighting for large files
+vim.opt.maxmempattern = 20000
 -- No spellcheck
 vim.opt.spell = false
 

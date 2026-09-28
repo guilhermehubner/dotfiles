@@ -16,7 +16,7 @@ return {
             graphql = { 'prettier' },
             python = { 'yapf', 'autopep8' },
         },
-        format_on_save = { timeout_ms = 2000, lsp_fallback = true, async = false },
+        format_on_save = { timeout_ms = 2000, lsp_format = 'fallback' },
         formatters = {
             lua_format = {
                 command = 'lua-format',

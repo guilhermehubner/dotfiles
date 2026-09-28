@@ -12,6 +12,8 @@ return {
         use_default_keymaps = false,
     },
     init = function()
-        vim.cmd('cab Ex Oil')
+        vim.keymap.set('ca', 'Ex', function()
+            return (vim.fn.getcmdtype() == ':' and vim.fn.getcmdline() == 'Ex') and 'Oil' or 'Ex'
+        end, { expr = true })
     end,
 }

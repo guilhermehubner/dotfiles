@@ -33,7 +33,7 @@ vim.api.nvim_set_keymap('v', '<', '<gv', {})
 vim.api.nvim_set_keymap('v', '>', '>gv', {})
 
 -- Close quickfix
-vim.api.nvim_set_keymap('n', '<leader><space>', ':cclose<CR> :lclose<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader><space>', '<cmd>cclose<bar>lclose<CR>', {})
 
 -- Move lines up and down
 vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', {})
@@ -51,15 +51,21 @@ vim.api.nvim_set_keymap('n', '<C-l>', ':tabnext<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', 'Q', '<nop>', {})
 
 -- Avoiding annoying mistakes when :w, :wq, :q, etc...
-vim.cmd('cab qw wq')
-vim.cmd('cab Qw wq')
-vim.cmd('cab qW wq')
-vim.cmd('cab QW wq')
-vim.cmd('cab W  w')
-vim.cmd('cab Wq wq')
-vim.cmd('cab wQ wq')
-vim.cmd('cab WQ wq')
-vim.cmd('cab Q  q')
+local function cmd_typo(typo, fix)
+    vim.keymap.set('ca', typo, function()
+        return (vim.fn.getcmdtype() == ':' and vim.fn.getcmdline() == typo) and fix or typo
+    end, { expr = true })
+end
+
+cmd_typo('qw', 'wq')
+cmd_typo('Qw', 'wq')
+cmd_typo('qW', 'wq')
+cmd_typo('QW', 'wq')
+cmd_typo('W', 'w')
+cmd_typo('Wq', 'wq')
+cmd_typo('wQ', 'wq')
+cmd_typo('WQ', 'wq')
+cmd_typo('Q', 'q')
 
 -- Quickfix
 vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', {})
