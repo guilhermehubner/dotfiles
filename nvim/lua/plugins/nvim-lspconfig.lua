@@ -33,39 +33,47 @@ return {
 
         vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities() })
 
-        vim.lsp.config('gopls', {
-            settings = {
-                gopls = {
-                    analyses = { unusedparams = true },
-                    staticcheck = true,
-                    gofumpt = true,
-                    codelenses = { gc_details = true, test = true, generate = true },
+        local lsp_servers = {
+            gopls = {
+                settings = {
+                    gopls = {
+                        analyses = { unusedparams = true },
+                        staticcheck = true,
+                        gofumpt = true,
+                        codelenses = { gc_details = true, test = true, generate = true },
+                    },
                 },
             },
-        })
-
-        vim.lsp.config('lua_ls', {
-            cmd = { 'lua-language-server' },
-            on_attach = function(client)
-                client.server_capabilities.documentFormattingProvider = false
-                client.server_capabilities.documentRangeFormattingProvider = false
-            end,
-        })
-
-        -- DB connections live in ~/.config/sqls/config.yml; without one sqls still completes keywords,
-        -- so drop its "no database connection" popup (it also fires for SQL embedded in Go via otter)
-        vim.lsp.config('sqls', {
-            handlers = {
-                ['window/showMessage'] = function(err, result, ctx)
-                    if result and result.message:find('no database connection') then
-                        return
-                    end
-                    return vim.lsp.handlers['window/showMessage'](err, result, ctx)
+            lua_ls = {
+                cmd = { 'lua-language-server' },
+                on_attach = function(client)
+                    client.server_capabilities.documentFormattingProvider = false
+                    client.server_capabilities.documentRangeFormattingProvider = false
                 end,
             },
-        })
+            -- DB connections live in ~/.config/sqls/config.yml; without one sqls still completes keywords,
+            -- so drop its "no database connection" popup (it also fires for SQL embedded in Go via otter)
+            sqls = {
+                handlers = {
+                    ['window/showMessage'] = function(err, result, ctx)
+                        if result and result.message:find('no database connection') then
+                            return
+                        end
+                        return vim.lsp.handlers['window/showMessage'](err, result, ctx)
+                    end,
+                },
+            },
+            ts_ls = {},
+            pyright = {},
+            phpactor = {},
+            solargraph = {},
+            clangd = {},
+        }
 
-        vim.lsp.enable({ 'lua_ls', 'gopls', 'ts_ls', 'pyright', 'phpactor', 'solargraph', 'clangd', 'sqls' })
+        for lsp, config in pairs(lsp_servers) do
+            vim.lsp.config(lsp, config)
+            vim.lsp.enable(lsp)
+        end
 
         function OrganizeImports()
             local bufnr = vim.api.nvim_get_current_buf()
