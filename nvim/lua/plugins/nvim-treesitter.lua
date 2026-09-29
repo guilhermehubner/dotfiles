@@ -16,6 +16,7 @@ return {
             'python',
             'hcl',
             'graphql',
+            'sql',
         })
 
         vim.api.nvim_create_autocmd('FileType', {
