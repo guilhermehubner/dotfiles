@@ -12,7 +12,6 @@ return {
                     vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = 'LSP: ' .. desc })
                 end
 
-
                 map('n', '<c-]>', vim.lsp.buf.definition, 'Go to definition')
                 map('n', '<leader>gs', vim.lsp.buf.document_symbol, 'List document symbols')
                 map('n', '<leader>gf', vim.lsp.buf.format, 'Format file')
@@ -41,6 +40,9 @@ return {
                         staticcheck = true,
                         gofumpt = true,
                         codelenses = { gc_details = true, test = true, generate = true },
+                        hints = {
+                            parameterNames = true,
+                        },
                     },
                 },
             },
@@ -77,7 +79,8 @@ return {
 
         function OrganizeImports()
             local bufnr = vim.api.nvim_get_current_buf()
-            local clients = vim.lsp.get_clients({ bufnr = bufnr, method = 'textDocument/codeAction' })
+            local clients =
+                vim.lsp.get_clients({ bufnr = bufnr, method = 'textDocument/codeAction' })
 
             for _, client in ipairs(clients) do
                 local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
